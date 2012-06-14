@@ -8,18 +8,18 @@ Steroskopische OpenGL Animation - Hausarbeit GD
 * Modell: OpenGL Teatpot
 
 * Wiki-Links: 
-- [Berechnung Abstand etc.] http://de.wikipedia.org/wiki/Stereoskopisches_Sehen#Der_Kreuzblick
-- [Bildbeispiele] http://de.wikipedia.org/wiki/Stereoskopie
+[Berechnung Abstand etc.] http://de.wikipedia.org/wiki/Stereoskopisches_Sehen#Der_Kreuzblick
+[Bildbeispiele] http://de.wikipedia.org/wiki/Stereoskopie
 
 * Dokumentation
-- Berechnung
-- Idee
-- Umsetzung
+Berechnung
+Idee
+Umsetzung
 
 * Präsentation
-- Aufbau Dokumentation folgen
+Aufbau Dokumentation folgen
 
 * Beispielprogramm
-- Umsetzung mittels SDL, C++/C und OpenGL
+Umsetzung mittels SDL, C++/C und OpenGL
 
 * Nötige Bibliotheken für Ubuntu recherchieren
