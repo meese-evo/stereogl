@@ -3,9 +3,8 @@ stereogl
 
 Steroskopische OpenGL Animation - Hausarbeit GD
 -----------------------------------------------
+- Modell: OpenGL Teatpot http://de.wikipedia.org/wiki/Utah-Teekanne
 
-
-* Modell: OpenGL Teatpot
 
 Wiki-Links: 
 -----------
