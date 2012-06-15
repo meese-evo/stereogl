@@ -1,5 +1,9 @@
 #include "GL/freeglut.h"
 #include "GL/gl.h"
+#include "cstdio"
+#include "iostream"
+
+using namespace std;
 
 /* display function - code from:
      http://fly.cc.fer.hr/~unreal/theredbook/chapter01.html
@@ -8,6 +12,7 @@ The following code is the same for any platform */
 
 void renderFunction()
 {
+    cout << "test" << endl;
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(1.0, 1.0, 1.0);
