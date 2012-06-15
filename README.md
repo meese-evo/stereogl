@@ -27,12 +27,15 @@ Beispielprogramm
 
 Nötige Bibliotheken für Ubuntu
 ------------------------------
-- recherchieren
+- [Setting up OpenGL-Dev in Ubuntu]http://www.codeproject.com/Articles/182109/Setting-up-an-OpenGL-development-environment-in-Ub
+- [alternativ] sudo apt-get install freeglut3-dev
+- [alternativ] sudo apt-get install build-essential libsdl1.2debian libsdl1.2-dev libgl1-mesa-dev libglu1-mesa-dev libsdl-image1.2 libsdl-image1.2-dev
 
 Entwicklungsumgebung
 --------------------
 - Eclipse Indigo 20120216-1857
 - [OpenGL in Eclipse] http://lifeofaprogrammergeek.blogspot.de/2008/06/opengl-glut-and-glew-in-eclipse.html
 - Netbeans 7.1.1 mit C/C++ Plugin / Git-Unterstützung integriert http://netbeans.org/kb/docs/ide/git.html
-    <br> * Team -> Git -> Clone
-    <br> * Repo-Url[SSH]: github.com:fraterv/stereogl.git
+    <li> Team -> Git -> Clone
+    <li> Repo-Url[SSH]: github.com:fraterv/stereogl.git
+    <li> [Start a new C++ Project in Netbeans]http://zetcode.com/articles/netbeanscdevelopment/
