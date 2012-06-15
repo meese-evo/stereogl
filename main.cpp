@@ -5,6 +5,7 @@
      http://fly.cc.fer.hr/~unreal/theredbook/chapter01.html
 This is the actual usage of the OpenGL library. 
 The following code is the same for any platform */
+
 void renderFunction()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
