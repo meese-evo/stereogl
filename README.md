@@ -32,6 +32,5 @@ Nötige Bibliotheken für Ubuntu
 Entwicklungsumgebung
 --------------------
 - Eclipse Indigo 20120216-1857
-- OpenGL in Eclipse http://lifeofaprogrammergeek.blogspot.de/2008/06/opengl-glut-and-glew-in-eclipse.html
-- 
-- huhu
+- [OpenGL in Eclipse] http://lifeofaprogrammergeek.blogspot.de/2008/06/opengl-glut-and-glew-in-eclipse.html
+- Netbeans 7.1.1 mit C/C++ Plugin / Git-Unterstützung integriert http://netbeans.org/kb/docs/ide/git.html
