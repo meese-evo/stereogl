@@ -40,7 +40,4 @@ Entwicklungsumgebung
     <li> Team -> Git -> Clone
     <li> Repo-Url[SSH]: github.com:fraterv/stereogl.git
     <li> [Start a new C++ Project in Netbeans]http://zetcode.com/articles/netbeanscdevelopment/
-    <li> rechte Maustaste auf das Projekt -> Properties -> Linker -> Librarys -> Add Option -> OtherOption
-    <li><li> -lglut
-    <li><li> -lGL
-    <li><li> -lGLU
+    <li> rechte Maustaste auf das Projekt -> Properties -> Linker -> Librarys -> Add Option -> OtherOption [-lglut / -lGL / -lGLU]
