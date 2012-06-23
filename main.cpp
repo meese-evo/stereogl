@@ -1,3 +1,7 @@
+/*
+ * Test
+ */
+
 #include "GL/freeglut.h"
 #include "GL/gl.h"
 #include "cstdio"
