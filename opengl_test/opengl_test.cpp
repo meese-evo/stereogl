@@ -1,8 +1,8 @@
 /*
- * Folgende Libs dem Linker hinzufügen
- * - GL
- * - glut
- */
+* Folgende Libs dem Linker hinzufügen
+* - GL
+* - glut
+*/
 
 #include "GL/freeglut.h"
 #include "GL/gl.h"
@@ -12,8 +12,8 @@
 using namespace std;
 
 /* display function - code from:
-     http://fly.cc.fer.hr/~unreal/theredbook/chapter01.html
-This is the actual usage of the OpenGL library. 
+http://fly.cc.fer.hr/~unreal/theredbook/chapter01.html
+This is the actual usage of the OpenGL library.
 The following code is the same for any platform */
 
 void renderFunction()
@@ -33,7 +33,7 @@ void renderFunction()
 }
 
 /* Main method - main entry point of application
-the freeglut library does the window creation work for us, 
+the freeglut library does the window creation work for us,
 regardless of the platform. */
 int main(int argc, char** argv)
 {
@@ -43,6 +43,6 @@ int main(int argc, char** argv)
     glutInitWindowPosition(100,100);
     glutCreateWindow("OpenGL - First window demo");
     glutDisplayFunc(renderFunction);
-    glutMainLoop();    
+    glutMainLoop();
     return 0;
 }
