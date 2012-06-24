@@ -44,7 +44,7 @@ Dem Linker müssen in der Regel folgende Libs bekannt gemacht werden:
     <li> sfml-system
     <li> sfml-window
     <li> GLU
-
+<br><br>
 - [OpenGL in Eclipse] http://lifeofaprogrammergeek.blogspot.de/2008/06/opengl-glut-and-glew-in-eclipse.html
 
 <br><br><br>
