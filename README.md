@@ -29,6 +29,7 @@ Nötige Bibliotheken für Ubuntu
 ------------------------------
 - SFML --> http://www.sfml-dev.org/tutorials/1.6/window-opengl.php
 - [SFML] sudo apt-get install libcsfml-dev libsfml-dev glutg3-dev
+<br><br>
 Wahrscheinlich nicht nötig, bei Problem sollte damit aber mal experimentiert werden:
 - [Setting up OpenGL-Dev in Ubuntu]http://www.codeproject.com/Articles/182109/Setting-up-an-OpenGL-development-environment-in-Ub
 - [alternativ] sudo apt-get install freeglut3-dev
@@ -38,14 +39,15 @@ Entwicklungsumgebung
 --------------------
 - Eclipse Indigo mit CDT C/C++ Plugin: http://www.eclipse.org/downloads/packages/eclipse-ide-cc-developers-includes-incubating-components/indigosr2
 - [Git in Eclipse EGit] http://www.vogella.com/articles/EGit/article.html
-<br>
+<br><br>
 Dem Linker müssen in der Regel folgende Libs bekannt gemacht werden:
-<li> sfml-system
-<li> sfml-window
-<li> GLU
+    <li> sfml-system
+    <li> sfml-window
+    <li> GLU
 
 - [OpenGL in Eclipse] http://lifeofaprogrammergeek.blogspot.de/2008/06/opengl-glut-and-glew-in-eclipse.html
 
+<br><br><br>
 - Netbeans 7.1.1 mit C/C++ Plugin / Git-Unterstützung integriert http://netbeans.org/kb/docs/ide/git.html
     <li> Team -> Git -> Clone
     <li> Repo-Url[SSH]: github.com:fraterv/stereogl.git
