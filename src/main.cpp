@@ -26,7 +26,7 @@ int main() {
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
-	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClearColor(255.f, 0.f, 0.f, 0.f);
 
 	// Enable Z-buffer read and write
 	glEnable(GL_DEPTH_TEST);
@@ -37,7 +37,7 @@ int main() {
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 
-	const sf::Input& Input = App.GetInput();
+//	const sf::Input& Input = App.GetInput();
 
 	sf::Clock Clock;
 
@@ -59,19 +59,23 @@ int main() {
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 		}
 
-		// Get some input states
-		bool LeftButtonDown = Input.IsMouseButtonDown(sf::Mouse::Left);
-		unsigned int MouseX = Input.GetMouseX();
-		unsigned int MouseY = Input.GetMouseY();
-
-		if (LeftButtonDown == true) {
-			cout << "X-Koordinate: " << MouseX << endl;
-			cout << "Y-Koordinate: " << MouseY << endl;
-		}
+//		// Get some input states
+//		bool LeftButtonDown = Input.IsMouseButtonDown(sf::Mouse::Left);
+//		unsigned int MouseX = Input.GetMouseX();
+//		unsigned int MouseY = Input.GetMouseY();
+//
+//		if (LeftButtonDown == true) {
+//			cout << "X-Koordinate: " << MouseX << endl;
+//			cout << "Y-Koordinate: " << MouseY << endl;
+//		}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glMatrixMode(GL_MODELVIEW);
+		glEnable(GL_COLOR_MATERIAL); //Materialfarbgebungsart
+		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
+		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
+		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
 		glLoadIdentity();
 		glTranslatef(0.f, 0.f, -200.f);
 		glRotatef(Clock.GetElapsedTime() * 50, 1.f, 0.f, 0.f);
@@ -90,15 +94,15 @@ int main() {
 		glVertex3f(50.f, 50.f, 50.f);
 		glVertex3f(50.f, -50.f, 50.f);
 
-		glVertex3f(-50.f, -50.f, -50.f);
-		glVertex3f(-50.f, 50.f, -50.f);
-		glVertex3f(-50.f, 50.f, 50.f);
-		glVertex3f(-50.f, -50.f, 50.f);
-
-		glVertex3f(50.f, -50.f, -50.f);
-		glVertex3f(50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, 50.f);
-		glVertex3f(50.f, -50.f, 50.f);
+//		glVertex3f(-50.f, -50.f, -50.f);
+//		glVertex3f(-50.f, 50.f, -50.f);
+//		glVertex3f(-50.f, 50.f, 50.f);
+//		glVertex3f(-50.f, -50.f, 50.f);
+//
+//		glVertex3f(50.f, -50.f, -50.f);
+//		glVertex3f(50.f, 50.f, -50.f);
+//		glVertex3f(50.f, 50.f, 50.f);
+//		glVertex3f(50.f, -50.f, 50.f);
 
 		glVertex3f(-50.f, -50.f, 50.f);
 		glVertex3f(-50.f, -50.f, -50.f);
@@ -112,8 +116,8 @@ int main() {
 
 		glEnd();
 
+
 		App.Display();
 	}
 	return EXIT_SUCCESS;
-
 }
