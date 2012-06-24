@@ -4,6 +4,8 @@
  * - sfml-window
  * - GLU
  *
+ * SFML-Tutorial: http://www.sfml-dev.org/tutorials/1.5/window-opengl.php
+ *
  */
 
 #include <SFML/System.hpp>
@@ -14,7 +16,6 @@ using namespace std;
 //using namespace sf;
 
 int main() {
-	bool running = true;
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
@@ -40,36 +41,30 @@ int main() {
 
 	sf::Clock Clock;
 
-	while (running) {
+	while (App.IsOpened()) {
 
 		sf::Event Event;
 		while (App.GetEvent(Event)) {
 			// Window closed
 			if (Event.Type == sf::Event::Closed)
-				running = false;
+				App.Close();
 
 			// Escape key pressed
 			if ((Event.Type == sf::Event::KeyPressed)
-					&& ((Event.Key.Code == sf::Key::Escape)
-							|| (Event.Key.Code == sf::Key::Q)))
-				running = false;
+					&& (Event.Key.Code == sf::Key::Escape))
+				App.Close();
 
 			// Adjust OpenGL viewport on resize event
 			if (Event.Type == sf::Event::Resized)
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 		}
 
-		// Get some useless input states, just to illustrate the tutorial
-		bool LeftKeyDown = Input.IsKeyDown(sf::Key::Left);
-//        bool         RightButtonDown = Input.IsMouseButtonDown(sf::Mouse::Right);
-//        bool         JoyButton1Down  = Input.IsJoystickButtonDown(0, 1);
+		// Get some input states
+		bool LeftButtonDown = Input.IsMouseButtonDown(sf::Mouse::Left);
 		unsigned int MouseX = Input.GetMouseX();
 		unsigned int MouseY = Input.GetMouseY();
-//        int          JoystickX       = Input.GetJoystickAxis(1, sf::Joy::AxisZ);
-//        int          JoystickY       = Input.GetJoystickAxis(1, sf::Joy::AxisY);
-//        int          JoystickPOV     = Input.GetJoystickAxis(1, sf::Joy::AxisPOV);
 
-		if (LeftKeyDown == true) {
+		if (LeftButtonDown == true) {
 			cout << "X-Koordinate: " << MouseX << endl;
 			cout << "Y-Koordinate: " << MouseY << endl;
 		}
@@ -119,6 +114,6 @@ int main() {
 
 		App.Display();
 	}
-
 	return EXIT_SUCCESS;
+
 }
