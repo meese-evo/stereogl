@@ -30,6 +30,7 @@ Nötige Bibliotheken für Ubuntu
 - [Setting up OpenGL-Dev in Ubuntu]http://www.codeproject.com/Articles/182109/Setting-up-an-OpenGL-development-environment-in-Ub
 - [alternativ] sudo apt-get install freeglut3-dev
 - [alternativ] sudo apt-get install build-essential libsdl1.2debian libsdl1.2-dev libgl1-mesa-dev libglu1-mesa-dev libsdl-image1.2 libsdl-image1.2-dev
+- [SFML] sudo apt-get install libcsfml-dev libsfml-dev glutg3-dev
 
 Entwicklungsumgebung
 --------------------
