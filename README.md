@@ -47,7 +47,7 @@ Dem Linker müssen in der Regel folgende Libs bekannt gemacht werden:
 <br><br>
 - [OpenGL in Eclipse] http://lifeofaprogrammergeek.blogspot.de/2008/06/opengl-glut-and-glew-in-eclipse.html
 
-<br><br><br>
+<br><br>
 - Netbeans 7.1.1 mit C/C++ Plugin / Git-Unterstützung integriert http://netbeans.org/kb/docs/ide/git.html
     <li> Team -> Git -> Clone
     <li> Repo-Url[SSH]: github.com:fraterv/stereogl.git
