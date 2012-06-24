@@ -2,6 +2,7 @@
 * Folgende Libs dem Linker hinzufügen
 * - GL
 * - glut
+*
 */
 
 #include "GL/freeglut.h"
