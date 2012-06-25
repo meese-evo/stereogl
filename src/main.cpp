@@ -26,7 +26,7 @@ int main() {
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
-	glClearColor(255.f, 0.f, 0.f, 0.f);
+	glClearColor(0.f, 0.f, 0.f, 0.f);
 
 	// Enable Z-buffer read and write
 	glEnable(GL_DEPTH_TEST);
@@ -37,9 +37,14 @@ int main() {
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 
+	//roatx
+	float roatx=0;
+	//floaty
+	float roaty=0;
+
 //	const sf::Input& Input = App.GetInput();
 
-	sf::Clock Clock;
+	//sf::Clock Clock;
 
 	while (App.IsOpened()) {
 
@@ -57,12 +62,30 @@ int main() {
 			// Adjust OpenGL viewport on resize event
 			if (Event.Type == sf::Event::Resized)
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+
+			if((Event.Type == sf::Event::KeyPressed)
+					&& (Event.Key.Code == sf::Key::Left))
+				roatx-=5;
+
+			if((Event.Type == sf::Event::KeyPressed)
+					&& (Event.Key.Code == sf::Key::Right))
+				roatx+=5;
+
+			if((Event.Type == sf::Event::KeyPressed)
+					&& (Event.Key.Code == sf::Key::Up))
+				roaty-=5;
+
+			if((Event.Type == sf::Event::KeyPressed)
+					&& (Event.Key.Code == sf::Key::Down))
+				roaty+=5;
 		}
 
 //		// Get some input states
 //		bool LeftButtonDown = Input.IsMouseButtonDown(sf::Mouse::Left);
 //		unsigned int MouseX = Input.GetMouseX();
 //		unsigned int MouseY = Input.GetMouseY();
+//
+//		cout << LeftButtonDown << endl;
 //
 //		if (LeftButtonDown == true) {
 //			cout << "X-Koordinate: " << MouseX << endl;
@@ -78,9 +101,9 @@ int main() {
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
 		glLoadIdentity();
 		glTranslatef(0.f, 0.f, -200.f);
-		glRotatef(Clock.GetElapsedTime() * 50, 1.f, 0.f, 0.f);
-		glRotatef(Clock.GetElapsedTime() * 30, 0.f, 1.f, 0.f);
-		glRotatef(Clock.GetElapsedTime() * 90, 0.f, 0.f, 1.f);
+		glRotatef(roatx, 0.f, 1.f, 0.f);
+		glRotatef(roaty, 1.f, 0.f, 0.f);
+//		glRotatef(Clock.GetElapsedTime() * 90, 0.f, 0.f, 1.f);
 
 		glBegin(GL_QUADS);
 
