@@ -112,35 +112,37 @@ int main() {
 
 		glBegin(GL_QUADS);
 
-		glVertex3f(-50.f, -50.f, -50.f);
-		glVertex3f(-50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, -50.f);
-		glVertex3f(50.f, -50.f, -50.f);
+			glColor3f(1,0,0);
+			glVertex3f(-50.f, -50.f, -50.f);
+			glVertex3f(-50.f, 50.f, -50.f);
+			glVertex3f(50.f, 50.f, -50.f);
+			glVertex3f(50.f, -50.f, -50.f);
 
-		glVertex3f(-50.f, -50.f, 50.f);
-		glVertex3f(-50.f, 50.f, 50.f);
-		glVertex3f(50.f, 50.f, 50.f);
-		glVertex3f(50.f, -50.f, 50.f);
+			glColor3f(1,1,0);
+			glVertex3f(-50.f, -50.f, 50.f);
+			glVertex3f(-50.f, 50.f, 50.f);
+			glVertex3f(50.f, 50.f, 50.f);
+			glVertex3f(50.f, -50.f, 50.f);
 
-//		glVertex3f(-50.f, -50.f, -50.f);
-//		glVertex3f(-50.f, 50.f, -50.f);
-//		glVertex3f(-50.f, 50.f, 50.f);
-//		glVertex3f(-50.f, -50.f, 50.f);
+//			glVertex3f(-50.f, -50.f, -50.f);
+//			glVertex3f(-50.f, 50.f, -50.f);
+//			glVertex3f(-50.f, 50.f, 50.f);
+//			glVertex3f(-50.f, -50.f, 50.f);
 //
-//		glVertex3f(50.f, -50.f, -50.f);
-//		glVertex3f(50.f, 50.f, -50.f);
-//		glVertex3f(50.f, 50.f, 50.f);
-//		glVertex3f(50.f, -50.f, 50.f);
+//			glVertex3f(50.f, -50.f, -50.f);
+//			glVertex3f(50.f, 50.f, -50.f);
+//			glVertex3f(50.f, 50.f, 50.f);
+//			glVertex3f(50.f, -50.f, 50.f);
 
-		glVertex3f(-50.f, -50.f, 50.f);
-		glVertex3f(-50.f, -50.f, -50.f);
-		glVertex3f(50.f, -50.f, -50.f);
-		glVertex3f(50.f, -50.f, 50.f);
+			glVertex3f(-50.f, -50.f, 50.f);
+			glVertex3f(-50.f, -50.f, -50.f);
+			glVertex3f(50.f, -50.f, -50.f);
+			glVertex3f(50.f, -50.f, 50.f);
 
-		glVertex3f(-50.f, 50.f, 50.f);
-		glVertex3f(-50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, 50.f);
+			glVertex3f(-50.f, 50.f, 50.f);
+			glVertex3f(-50.f, 50.f, -50.f);
+			glVertex3f(50.f, 50.f, -50.f);
+			glVertex3f(50.f, 50.f, 50.f);
 
 		glEnd();
 
