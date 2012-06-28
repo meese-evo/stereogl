@@ -42,7 +42,7 @@ int main() {
 	//floaty
 	float roaty=0;
 
-//	const sf::Input& Input = App.GetInput();
+	const sf::Input& Input = App.GetInput();
 
 	//sf::Clock Clock;
 
@@ -63,34 +63,39 @@ int main() {
 			if (Event.Type == sf::Event::Resized)
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 
-			if((Event.Type == sf::Event::KeyPressed)
-					&& (Event.Key.Code == sf::Key::Left))
-				roatx-=5;
-
-			if((Event.Type == sf::Event::KeyPressed)
-					&& (Event.Key.Code == sf::Key::Right))
-				roatx+=5;
-
-			if((Event.Type == sf::Event::KeyPressed)
-					&& (Event.Key.Code == sf::Key::Up))
-				roaty-=5;
-
-			if((Event.Type == sf::Event::KeyPressed)
-					&& (Event.Key.Code == sf::Key::Down))
-				roaty+=5;
+//			if((Event.Type == sf::Event::KeyPressed)
+//					&& (Event.Key.Code == sf::Key::Left))
+//				roatx-=5;
+//
+//			if((Event.Type == sf::Event::KeyPressed)
+//					&& (Event.Key.Code == sf::Key::Right))
+//				roatx+=5;
+//
+//			if((Event.Type == sf::Event::KeyPressed)
+//					&& (Event.Key.Code == sf::Key::Up))
+//				roaty-=5;
+//
+//			if((Event.Type == sf::Event::KeyPressed)
+//					&& (Event.Key.Code == sf::Key::Down))
+//				roaty+=5;
 		}
 
-//		// Get some input states
-//		bool LeftButtonDown = Input.IsMouseButtonDown(sf::Mouse::Left);
-//		unsigned int MouseX = Input.GetMouseX();
-//		unsigned int MouseY = Input.GetMouseY();
-//
-//		cout << LeftButtonDown << endl;
-//
-//		if (LeftButtonDown == true) {
-//			cout << "X-Koordinate: " << MouseX << endl;
-//			cout << "Y-Koordinate: " << MouseY << endl;
-//		}
+		// Get some input states
+		bool LeftKeyDown = Input.IsKeyDown(sf::Key::Left);
+		bool RightKeyDown = Input.IsKeyDown(sf::Key::Right);
+		bool UpKeyDown = Input.IsKeyDown(sf::Key::Up);
+		bool DownKeyDown = Input.IsKeyDown(sf::Key::Down);
+
+		// Steuerung
+		if (LeftKeyDown == 1)
+			roatx-=5;
+		if (RightKeyDown == 1)
+			roatx+=5;
+		if (UpKeyDown == 1)
+			roaty-=5;
+		if (DownKeyDown == 1)
+			roaty-=5;
+
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
