@@ -21,8 +21,8 @@ int main() {
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
 	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
-	sf::Window App(sf::VideoMode(800, 600, 32), "SFML OpenGL", sf::Style::Close,
-			Settings);
+	sf::Window App(sf::VideoMode(800, 600, 32), "SFML OpenGL",
+			sf::Style::Close, Settings);
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
@@ -37,65 +37,49 @@ int main() {
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 
-	//roatx
-	float roatx=0;
-	//floaty
-	float roaty=0;
-
-	const sf::Input& Input = App.GetInput();
-
-	//sf::Clock Clock;
+	// Rotation
+	float rotx = 0;
+	float roty = 0;
 
 	while (App.IsOpened()) {
 
 		sf::Event Event;
 		while (App.GetEvent(Event)) {
+
+			switch (Event.Type) {
+
 			// Window closed
-			if (Event.Type == sf::Event::Closed)
+			case sf::Event::Closed:
 				App.Close();
+				break;
+				// Escape key pressed
+			case sf::Event::KeyPressed:
+				if (Event.Key.Code == sf::Key::Escape)
+					App.Close();
+				// Rotation Left
+				if (Event.Key.Code == sf::Key::Left)
+					rotx -= 5;
+				//Rotation Right
+				if (Event.Key.Code == sf::Key::Right)
+					rotx += 5;
+				//Rotation Up
+				if (Event.Key.Code == sf::Key::Up)
+					roty -= 5;
+				//Rotation Down
+				if (Event.Key.Code == sf::Key::Down)
+					roty += 5;
+				break;
 
-			// Escape key pressed
-			if ((Event.Type == sf::Event::KeyPressed)
-					&& (Event.Key.Code == sf::Key::Escape))
-				App.Close();
-
-			// Adjust OpenGL viewport on resize event
-			if (Event.Type == sf::Event::Resized)
+				// Adjust OpenGL viewport on resize event
+			case sf::Event::Resized:
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+				break;
 
-//			if((Event.Type == sf::Event::KeyPressed)
-//					&& (Event.Key.Code == sf::Key::Left))
-//				roatx-=5;
-//
-//			if((Event.Type == sf::Event::KeyPressed)
-//					&& (Event.Key.Code == sf::Key::Right))
-//				roatx+=5;
-//
-//			if((Event.Type == sf::Event::KeyPressed)
-//					&& (Event.Key.Code == sf::Key::Up))
-//				roaty-=5;
-//
-//			if((Event.Type == sf::Event::KeyPressed)
-//					&& (Event.Key.Code == sf::Key::Down))
-//				roaty+=5;
+			default:
+				break;
+
+			}
 		}
-
-		// Get some input states
-		bool LeftKeyDown = Input.IsKeyDown(sf::Key::Left);
-		bool RightKeyDown = Input.IsKeyDown(sf::Key::Right);
-		bool UpKeyDown = Input.IsKeyDown(sf::Key::Up);
-		bool DownKeyDown = Input.IsKeyDown(sf::Key::Down);
-
-		// Steuerung
-		if (LeftKeyDown == 1)
-			roatx-=5;
-		if (RightKeyDown == 1)
-			roatx+=5;
-		if (UpKeyDown == 1)
-			roaty-=5;
-		if (DownKeyDown == 1)
-			roaty-=5;
-
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -106,46 +90,47 @@ int main() {
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
 		glLoadIdentity();
 		glTranslatef(0.f, 0.f, -200.f);
-		glRotatef(roatx, 0.f, 1.f, 0.f);
-		glRotatef(roaty, 1.f, 0.f, 0.f);
-//		glRotatef(Clock.GetElapsedTime() * 90, 0.f, 0.f, 1.f);
+		glRotatef(rotx, 0.f, 1.f, 0.f);
+		glRotatef(roty, 1.f, 0.f, 0.f);
+		//		glRotatef(Clock.GetElapsedTime() * 90, 0.f, 0.f, 1.f);
 
 		glBegin(GL_QUADS);
 
-			glColor3f(1,0,0);
-			glVertex3f(-50.f, -50.f, -50.f);
-			glVertex3f(-50.f, 50.f, -50.f);
-			glVertex3f(50.f, 50.f, -50.f);
-			glVertex3f(50.f, -50.f, -50.f);
+		glColor3f(1, 0, 0);
+		glVertex3f(-50.f, -50.f, -50.f);
+		glVertex3f(-50.f, 50.f, -50.f);
+		glVertex3f(50.f, 50.f, -50.f);
+		glVertex3f(50.f, -50.f, -50.f);
 
-			glColor3f(1,1,0);
-			glVertex3f(-50.f, -50.f, 50.f);
-			glVertex3f(-50.f, 50.f, 50.f);
-			glVertex3f(50.f, 50.f, 50.f);
-			glVertex3f(50.f, -50.f, 50.f);
+		glColor3f(1, 1, 0);
+		glVertex3f(-50.f, -50.f, 50.f);
+		glVertex3f(-50.f, 50.f, 50.f);
+		glVertex3f(50.f, 50.f, 50.f);
+		glVertex3f(50.f, -50.f, 50.f);
 
-//			glVertex3f(-50.f, -50.f, -50.f);
-//			glVertex3f(-50.f, 50.f, -50.f);
-//			glVertex3f(-50.f, 50.f, 50.f);
-//			glVertex3f(-50.f, -50.f, 50.f);
-//
-//			glVertex3f(50.f, -50.f, -50.f);
-//			glVertex3f(50.f, 50.f, -50.f);
-//			glVertex3f(50.f, 50.f, 50.f);
-//			glVertex3f(50.f, -50.f, 50.f);
+		//			glVertex3f(-50.f, -50.f, -50.f);
+		//			glVertex3f(-50.f, 50.f, -50.f);
+		//			glVertex3f(-50.f, 50.f, 50.f);
+		//			glVertex3f(-50.f, -50.f, 50.f);
+		//
+		//			glVertex3f(50.f, -50.f, -50.f);
+		//			glVertex3f(50.f, 50.f, -50.f);
+		//			glVertex3f(50.f, 50.f, 50.f);
+		//			glVertex3f(50.f, -50.f, 50.f);
 
-			glVertex3f(-50.f, -50.f, 50.f);
-			glVertex3f(-50.f, -50.f, -50.f);
-			glVertex3f(50.f, -50.f, -50.f);
-			glVertex3f(50.f, -50.f, 50.f);
+		glColor3f(0, 1, 0);
+		glVertex3f(-50.f, -50.f, 50.f);
+		glVertex3f(-50.f, -50.f, -50.f);
+		glVertex3f(50.f, -50.f, -50.f);
+		glVertex3f(50.f, -50.f, 50.f);
 
-			glVertex3f(-50.f, 50.f, 50.f);
-			glVertex3f(-50.f, 50.f, -50.f);
-			glVertex3f(50.f, 50.f, -50.f);
-			glVertex3f(50.f, 50.f, 50.f);
+		glColor3f(0, 1, 1);
+		glVertex3f(-50.f, 50.f, 50.f);
+		glVertex3f(-50.f, 50.f, -50.f);
+		glVertex3f(50.f, 50.f, -50.f);
+		glVertex3f(50.f, 50.f, 50.f);
 
 		glEnd();
-
 
 		App.Display();
 	}
