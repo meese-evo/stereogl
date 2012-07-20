@@ -88,43 +88,53 @@ int main() {
 		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
 		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
+		glEnable(GL_NORMALIZE);
 		glLoadIdentity();
 		glTranslatef(0.f, 0.f, -200.f);
 		glRotatef(rotx, 0.f, 1.f, 0.f);
 		glRotatef(roty, 1.f, 0.f, 0.f);
 		//		glRotatef(Clock.GetElapsedTime() * 90, 0.f, 0.f, 1.f);
 
-		glBegin(GL_QUADS);
+		glBegin(GL_QUADS); // Start der Primitiv-Definition
 
-		glColor3f(1, 0, 0);
-		glVertex3f(-50.f, -50.f, -50.f);
-		glVertex3f(-50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, -50.f);
-		glVertex3f(50.f, -50.f, -50.f);
+		//Fläche Rückseite - Blau
+		glColor3f(0, 0, 1); // Definition der Farbe
+//		glNormal3f(0, 0, 0);
+		glVertex3f(-50.f, -50.f, -50.f); //V1 - Erstes Vertex
+		glVertex3f(-50.f, 50.f, -50.f); //V2 - Zweites Vertex
+		glVertex3f(50.f, 50.f, -50.f); //V3 - Drittes Vertex
+		glVertex3f(50.f, -50.f, -50.f); //V4 - Viertes Vertex
 
-		glColor3f(1, 1, 0);
+		//Fläche Vorderseite - Grün
+		glColor3f(0, 1, 0);
 		glVertex3f(-50.f, -50.f, 50.f);
 		glVertex3f(-50.f, 50.f, 50.f);
 		glVertex3f(50.f, 50.f, 50.f);
 		glVertex3f(50.f, -50.f, 50.f);
 
-		//			glVertex3f(-50.f, -50.f, -50.f);
-		//			glVertex3f(-50.f, 50.f, -50.f);
-		//			glVertex3f(-50.f, 50.f, 50.f);
-		//			glVertex3f(-50.f, -50.f, 50.f);
-		//
-		//			glVertex3f(50.f, -50.f, -50.f);
-		//			glVertex3f(50.f, 50.f, -50.f);
-		//			glVertex3f(50.f, 50.f, 50.f);
-		//			glVertex3f(50.f, -50.f, 50.f);
+		//Fläche Links - Hellblau
+		glColor3f(0, 1, 1);
+		glVertex3f(-50.f, -50.f, -50.f);
+		glVertex3f(-50.f, 50.f, -50.f);
+		glVertex3f(-50.f, 50.f, 50.f);
+		glVertex3f(-50.f, -50.f, 50.f);
 
-		glColor3f(0, 1, 0);
+		//Fläche Rechts - Rot
+		glColor3f(1, 0, 0);
+		glVertex3f(50.f, -50.f, -50.f);
+		glVertex3f(50.f, 50.f, -50.f);
+		glVertex3f(50.f, 50.f, 50.f);
+		glVertex3f(50.f, -50.f, 50.f);
+
+		//Fläche Unten - Lila
+		glColor3f(1, 0, 1);
 		glVertex3f(-50.f, -50.f, 50.f);
 		glVertex3f(-50.f, -50.f, -50.f);
 		glVertex3f(50.f, -50.f, -50.f);
 		glVertex3f(50.f, -50.f, 50.f);
 
-		glColor3f(0, 1, 1);
+		//Fläche Oben - Gelb
+		glColor3f(1, 1, 0);
 		glVertex3f(-50.f, 50.f, 50.f);
 		glVertex3f(-50.f, 50.f, -50.f);
 		glVertex3f(50.f, 50.f, -50.f);
