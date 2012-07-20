@@ -15,18 +15,23 @@
 using namespace std;
 //using namespace sf;
 
+struct fVektor {
+	GLfloat x;
+	GLfloat y;
+	GLfloat z;
+};
+
 int main() {
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
 	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
-	sf::Window App(sf::VideoMode(800, 600, 32), "SFML OpenGL",
-			sf::Style::Close, Settings);
+	sf::Window App(sf::VideoMode(800, 600, 32), "SFML OpenGL", sf::Style::Close,
+			Settings);
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
-	glClearColor(0.f, 0.f, 0.f, 0.f);
 
 	// Enable Z-buffer read and write
 	glEnable(GL_DEPTH_TEST);
@@ -85,9 +90,10 @@ int main() {
 
 		glMatrixMode(GL_MODELVIEW);
 		glEnable(GL_COLOR_MATERIAL); //Materialfarbgebungsart
-		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
 		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
+		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
+		glEnable(GL_NORMALIZE);
 		glLoadIdentity();
 		glTranslatef(0.f, 0.f, -200.f);
 		glRotatef(rotx, 0.f, 1.f, 0.f);
@@ -96,47 +102,57 @@ int main() {
 
 		glBegin(GL_QUADS); // Start der Primitiv-Definition
 
-		//Fläche Rückseite - Blau
-		glColor3f(0, 0, 1); // Definition der Farbe
-		glVertex3f(-50.f, -50.f, -50.f); //V1 - Erstes Vertex
-		glVertex3f(-50.f, 50.f, -50.f); //V2 - Zweites Vertex
-		glVertex3f(50.f, 50.f, -50.f); //V3 - Drittes Vertex
-		glVertex3f(50.f, -50.f, -50.f); //V4 - Viertes Vertex
+		const GLfloat v0[3] = {-50, -50, 50};
+		const GLfloat v1[3] = {-50, 50, 50};
+		const GLfloat v2[3] = {50, 50, 50};
+		const GLfloat v3[3] = {50, -50, 50};
+		const GLfloat v4[3] = {50, -50, -50};
+		const GLfloat v5[3] = {50, 50, -50};
+		const GLfloat v6[3] = {-50, -50, -50};
+		const GLfloat v7[3] = {-50, 50, -50};
 
 		//Fläche Vorderseite - Grün
 		glColor3f(0, 1, 0);
-		glVertex3f(-50.f, -50.f, 50.f);
-		glVertex3f(-50.f, 50.f, 50.f);
-		glVertex3f(50.f, 50.f, 50.f);
-		glVertex3f(50.f, -50.f, 50.f);
-
-		//Fläche Links - Hellblau
-		glColor3f(0, 1, 1);
-		glVertex3f(-50.f, -50.f, -50.f);
-		glVertex3f(-50.f, 50.f, -50.f);
-		glVertex3f(-50.f, 50.f, 50.f);
-		glVertex3f(-50.f, -50.f, 50.f);
+		glNormal3f(0, 0, 1);
+		glVertex3fv(v0);
+		glVertex3fv(v1);
+		glVertex3fv(v2);
+		glVertex3fv(v3);
 
 		//Fläche Rechts - Rot
 		glColor3f(1, 0, 0);
-		glVertex3f(50.f, -50.f, -50.f);
-		glVertex3f(50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, 50.f);
-		glVertex3f(50.f, -50.f, 50.f);
+		glVertex3fv(v4);
+		glVertex3fv(v5);
+		glVertex3fv(v2);
+		glVertex3fv(v3);
+
+		//Fläche Rückseite - Blau
+		glColor3f(0, 0, 1); // Definition der Farbe
+		glVertex3fv(v6);
+		glVertex3fv(v7);
+		glVertex3fv(v5);
+		glVertex3fv(v4);
+
+		//Fläche Links - Hellblau
+		glColor3f(0, 1, 1);
+		glVertex3fv(v6);
+		glVertex3fv(v7);
+		glVertex3fv(v1);
+		glVertex3fv(v0);
 
 		//Fläche Unten - Lila
 		glColor3f(1, 0, 1);
-		glVertex3f(-50.f, -50.f, 50.f);
-		glVertex3f(-50.f, -50.f, -50.f);
-		glVertex3f(50.f, -50.f, -50.f);
-		glVertex3f(50.f, -50.f, 50.f);
+		glVertex3fv(v0);
+		glVertex3fv(v6);
+		glVertex3fv(v4);
+		glVertex3fv(v3);
 
 		//Fläche Oben - Gelb
 		glColor3f(1, 1, 0);
-		glVertex3f(-50.f, 50.f, 50.f);
-		glVertex3f(-50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, -50.f);
-		glVertex3f(50.f, 50.f, 50.f);
+		glVertex3fv(v1);
+		glVertex3fv(v7);
+		glVertex3fv(v5);
+		glVertex3fv(v2);
 
 		glEnd();
 
