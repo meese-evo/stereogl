@@ -85,8 +85,8 @@ int main() {
 
 		glMatrixMode(GL_MODELVIEW);
 		glEnable(GL_COLOR_MATERIAL); //Materialfarbgebungsart
-		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
 		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
+		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
 		glEnable(GL_NORMALIZE);
 		glLoadIdentity();
