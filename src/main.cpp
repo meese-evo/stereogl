@@ -11,6 +11,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 //using namespace sf;
@@ -21,17 +22,20 @@ struct fVektor {
 	GLfloat z;
 };
 
+bool CalcNormal(GLfloat v0, GLfloat v1, GLfloat v2);
+
 int main() {
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
 	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
-	sf::Window App(sf::VideoMode(800, 600, 32), "SFML OpenGL", sf::Style::Close,
+	sf::Window App(sf::VideoMode(800, 800, 32), "SFML OpenGL", sf::Style::Close,
 			Settings);
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
+	glClearColor(0.f, 0.f, 0.f, 0.f);
 
 	// Enable Z-buffer read and write
 	glEnable(GL_DEPTH_TEST);
@@ -41,6 +45,16 @@ int main() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
+
+	// Vertexe des Würfels
+	const GLfloat v0[3] = { -50, -50, 50 };
+	const GLfloat v1[3] = { -50, 50, 50 };
+	const GLfloat v2[3] = { 50, 50, 50 };
+	const GLfloat v3[3] = { 50, -50, 50 };
+	const GLfloat v4[3] = { 50, -50, -50 };
+	const GLfloat v5[3] = { 50, 50, -50 };
+	const GLfloat v6[3] = { -50, -50, -50 };
+	const GLfloat v7[3] = { -50, 50, -50 };
 
 	// Rotation
 	float rotx = 0;
@@ -102,15 +116,6 @@ int main() {
 
 		glBegin(GL_QUADS); // Start der Primitiv-Definition
 
-		const GLfloat v0[3] = {-50, -50, 50};
-		const GLfloat v1[3] = {-50, 50, 50};
-		const GLfloat v2[3] = {50, 50, 50};
-		const GLfloat v3[3] = {50, -50, 50};
-		const GLfloat v4[3] = {50, -50, -50};
-		const GLfloat v5[3] = {50, 50, -50};
-		const GLfloat v6[3] = {-50, -50, -50};
-		const GLfloat v7[3] = {-50, 50, -50};
-
 		//Fläche Vorderseite - Grün
 		glColor3f(0, 1, 0);
 		glNormal3f(0, 0, 1);
@@ -159,4 +164,35 @@ int main() {
 		App.Display();
 	}
 	return EXIT_SUCCESS;
+}
+
+bool CalcNormal(GLfloat V1, GLfloat V2, GLfloat V3) {
+	fVektor V1V2, V1V3, KREUZ;
+	GLfloat Betrag;
+
+	// Vorbereitung
+	V1V2.x = V2[1] - V1[1]; // Vektoren für Kreuzprodukt-
+	V1V2.y = V2[2] - V1[2]; // berechnung ermitteln:
+	V1V2.z = V2[3] - V1[3]; // Komponentenweise auf
+	V1V3.x = V3[1] - V1[1]; // Vertex V1 zurückführen
+	V1V3.y = V3[2] - V1[2]; // => 2 komplanare Vektoren
+	V1V3.z = V3[3] - V1[3]; // mit Berührpunkt V1
+	// Berechnung des Kreuzprodukts
+	KREUZ.x = +((V1V2.y * V1V3.z) - (V1V2.z * V1V3.y));
+	KREUZ.y = -((V1V2.x * V1V3.z) - (V1V2.z * V1V3.x));
+	KREUZ.z = +((V1V2.x * V1V3.y) - (V1V2.y * V1V3.x));
+	// Prüfen des Vektors
+	Betrag = sqrt( //Länge des Vektors ermitteln
+			pow(KREUZ.x, 2.0) + pow(KREUZ.y, 2.0) + pow(KREUZ.z, 2.0));
+	if (Betrag == 0.0)
+		//Der Normalenvektor MUSS länger
+		return 0;
+	//als ein Nullvektor sein!
+	// Normalenvektor als Einsvektor abspeichern
+//	m_structOGLStatus.vLastNormale.x = KREUZ.x / Betrag;
+//	m_structOGLStatus.vLastNormale.y = KREUZ.y / Betrag;
+//	m_structOGLStatus.vLastNormale.z = KREUZ.z / Betrag;
+
+	return 1;
+
 }
