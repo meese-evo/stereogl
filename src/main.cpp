@@ -88,7 +88,6 @@ int main() {
 		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
 		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
-		glEnable(GL_NORMALIZE);
 		glLoadIdentity();
 		glTranslatef(0.f, 0.f, -200.f);
 		glRotatef(rotx, 0.f, 1.f, 0.f);
@@ -99,7 +98,6 @@ int main() {
 
 		//Fläche Rückseite - Blau
 		glColor3f(0, 0, 1); // Definition der Farbe
-//		glNormal3f(0, 0, 0);
 		glVertex3f(-50.f, -50.f, -50.f); //V1 - Erstes Vertex
 		glVertex3f(-50.f, 50.f, -50.f); //V2 - Zweites Vertex
 		glVertex3f(50.f, 50.f, -50.f); //V3 - Drittes Vertex
