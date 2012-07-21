@@ -20,9 +20,9 @@ struct fVektor {
 	GLfloat x;
 	GLfloat y;
 	GLfloat z;
-};
+} normV;
 
-bool CalcNormal(GLfloat v0, GLfloat v1, GLfloat v2);
+void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
 
 int main() {
 
@@ -47,14 +47,14 @@ int main() {
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 
 	// Vertexe des Würfels
-	const GLfloat v0[3] = { -50, -50, 50 };
-	const GLfloat v1[3] = { -50, 50, 50 };
-	const GLfloat v2[3] = { 50, 50, 50 };
-	const GLfloat v3[3] = { 50, -50, 50 };
-	const GLfloat v4[3] = { 50, -50, -50 };
-	const GLfloat v5[3] = { 50, 50, -50 };
-	const GLfloat v6[3] = { -50, -50, -50 };
-	const GLfloat v7[3] = { -50, 50, -50 };
+	GLfloat v0[3] = { -50, -50, 50 };
+	GLfloat v1[3] = { -50, 50, 50 };
+	GLfloat v2[3] = { 50, 50, 50 };
+	GLfloat v3[3] = { 50, -50, 50 };
+	GLfloat v4[3] = { 50, -50, -50 };
+	GLfloat v5[3] = { 50, 50, -50 };
+	GLfloat v6[3] = { -50, -50, -50 };
+	GLfloat v7[3] = { -50, 50, -50 };
 
 	// Rotation
 	float rotx = 0;
@@ -116,6 +116,13 @@ int main() {
 
 		glBegin(GL_QUADS); // Start der Primitiv-Definition
 
+//		// Berechnung des Normalenvektors
+//		CalcNormal(v1, v7, v5);
+//		cout << "Norm.-X: " << normV.x << endl;
+//		cout << "Norm.-Y: " << normV.y << endl;
+//		cout << "Norm.-Z: " << normV.z << endl;
+//		cout << endl << endl;
+
 		//Fläche Vorderseite - Grün
 		glColor3f(0, 1, 0);
 		glNormal3f(0, 0, 1);
@@ -126,6 +133,7 @@ int main() {
 
 		//Fläche Rechts - Rot
 		glColor3f(1, 0, 0);
+		glNormal3f(1, 0, 0);
 		glVertex3fv(v4);
 		glVertex3fv(v5);
 		glVertex3fv(v2);
@@ -133,6 +141,7 @@ int main() {
 
 		//Fläche Rückseite - Blau
 		glColor3f(0, 0, 1); // Definition der Farbe
+		glNormal3f(0, 0, -1);
 		glVertex3fv(v6);
 		glVertex3fv(v7);
 		glVertex3fv(v5);
@@ -140,6 +149,7 @@ int main() {
 
 		//Fläche Links - Hellblau
 		glColor3f(0, 1, 1);
+		glNormal3f(-1, 0, 0);
 		glVertex3fv(v6);
 		glVertex3fv(v7);
 		glVertex3fv(v1);
@@ -147,6 +157,7 @@ int main() {
 
 		//Fläche Unten - Lila
 		glColor3f(1, 0, 1);
+		glNormal3f(0, -1, 0);
 		glVertex3fv(v0);
 		glVertex3fv(v6);
 		glVertex3fv(v4);
@@ -154,6 +165,7 @@ int main() {
 
 		//Fläche Oben - Gelb
 		glColor3f(1, 1, 0);
+		glNormal3f(0, 1, 0);
 		glVertex3fv(v1);
 		glVertex3fv(v7);
 		glVertex3fv(v5);
@@ -166,17 +178,18 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-bool CalcNormal(GLfloat V1, GLfloat V2, GLfloat V3) {
+// Fkt. zur Berechnung des Normalenvektors
+void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]) {
 	fVektor V1V2, V1V3, KREUZ;
 	GLfloat Betrag;
 
 	// Vorbereitung
-	V1V2.x = V2[1] - V1[1]; // Vektoren für Kreuzprodukt-
-	V1V2.y = V2[2] - V1[2]; // berechnung ermitteln:
-	V1V2.z = V2[3] - V1[3]; // Komponentenweise auf
-	V1V3.x = V3[1] - V1[1]; // Vertex V1 zurückführen
-	V1V3.y = V3[2] - V1[2]; // => 2 komplanare Vektoren
-	V1V3.z = V3[3] - V1[3]; // mit Berührpunkt V1
+	V1V2.x = V2[0] - V1[0]; // Vektoren für Kreuzprodukt-
+	V1V2.y = V2[1] - V1[1]; // berechnung ermitteln:
+	V1V2.z = V2[2] - V1[2]; // Komponentenweise auf
+	V1V3.x = V3[0] - V1[0]; // Vertex V1 zurückführen
+	V1V3.y = V3[1] - V1[1]; // => 2 komplanare Vektoren
+	V1V3.z = V3[2] - V1[2]; // mit Berührpunkt V1
 	// Berechnung des Kreuzprodukts
 	KREUZ.x = +((V1V2.y * V1V3.z) - (V1V2.z * V1V3.y));
 	KREUZ.y = -((V1V2.x * V1V3.z) - (V1V2.z * V1V3.x));
@@ -184,15 +197,15 @@ bool CalcNormal(GLfloat V1, GLfloat V2, GLfloat V3) {
 	// Prüfen des Vektors
 	Betrag = sqrt( //Länge des Vektors ermitteln
 			pow(KREUZ.x, 2.0) + pow(KREUZ.y, 2.0) + pow(KREUZ.z, 2.0));
-	if (Betrag == 0.0)
-		//Der Normalenvektor MUSS länger
-		return 0;
+//	if (Betrag == 0.0)
+//		//Der Normalenvektor MUSS länger
+//		return 0;
 	//als ein Nullvektor sein!
 	// Normalenvektor als Einsvektor abspeichern
-//	m_structOGLStatus.vLastNormale.x = KREUZ.x / Betrag;
-//	m_structOGLStatus.vLastNormale.y = KREUZ.y / Betrag;
-//	m_structOGLStatus.vLastNormale.z = KREUZ.z / Betrag;
+	normV.x = KREUZ.x / Betrag;
+	normV.y = KREUZ.y / Betrag;
+	normV.z = KREUZ.z / Betrag;
 
-	return 1;
+//	return 1;
 
 }
