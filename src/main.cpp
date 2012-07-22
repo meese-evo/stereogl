@@ -153,8 +153,8 @@ void DrawCube(int i, int width, int height) {
 	glBegin(GL_QUADS); // Start der Primitiv-Definition
 
 	// Fläche Vorderseite - Grün
-	glColor3f(0, 1, 0);
-	glNormal3f(0, 0, 1);
+	glColor3f(0, 1, 0); // Definition der Farbe
+	glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
 	glVertex3fv(v0);
 	glVertex3fv(v1);
 	glVertex3fv(v2);
@@ -167,7 +167,7 @@ void DrawCube(int i, int width, int height) {
 	glVertex3fv(v2);
 	glVertex3fv(v3);
 	// Fläche Rückseite - Blau
-	glColor3f(0, 0, 1); // Definition der Farbe
+	glColor3f(0, 0, 1);
 	glNormal3f(0, 0, -1);
 	glVertex3fv(v6);
 	glVertex3fv(v7);
@@ -198,6 +198,7 @@ void DrawCube(int i, int width, int height) {
 	glEnd();
 }
 
+// Fkt. aus Markt&Technik "Jetzt lerne ich OpenGL"
 // Fkt. zur Berechnung des Normalenvektors
 void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]) {
 	fVektor V1V2, V1V3, KREUZ;
@@ -217,15 +218,8 @@ void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]) {
 	// Prüfen des Vektors
 	Betrag = sqrt( //Länge des Vektors ermitteln
 			pow(KREUZ.x, 2.0) + pow(KREUZ.y, 2.0) + pow(KREUZ.z, 2.0));
-//	if (Betrag == 0.0)
-//		//Der Normalenvektor MUSS länger
-//		return 0;
-	//als ein Nullvektor sein!
 	// Normalenvektor als Einsvektor abspeichern
 	normV.x = KREUZ.x / Betrag;
 	normV.y = KREUZ.y / Betrag;
 	normV.z = KREUZ.z / Betrag;
-
-//	return 1;
-
 }
