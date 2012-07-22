@@ -38,11 +38,24 @@ void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
 
 int main() {
 
+	int width = 1600;
+	int height = 800;
+
+	struct Viewport {
+				int x;
+				int y;
+				int w;
+				int h;
+			};
+
+	Viewport view0 = {0, 0, width/2 -1, height -1};
+	Viewport view1 = {width/2, 0, width/2 -1, height -1};
+
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
 	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
-	sf::Window App(sf::VideoMode(800, 400, 32), "SFML OpenGL", sf::Style::Close,
+	sf::Window App(sf::VideoMode(width, height, 32), "SFML OpenGL", sf::Style::Close,
 			Settings);
 
 	// Set color and depth clear value
@@ -115,10 +128,10 @@ int main() {
 		glRotatef(rotx, 0.f, 1.f, 0.f);
 		glRotatef(roty, 1.f, 0.f, 0.f);
 
-		glViewport(0, 0, 399, 399); // Linker Viewport
+		glViewport(view0.x, view0.y, view0.w, view0.h); // Linker Viewport
 		DrawCube();
 
-		glViewport(400, 0, 399, 399); //rechter Viewport
+		glViewport(view1.x, view1.y, view1.w, view1.h); //rechter Viewport
 		DrawCube();
 
 		App.Display();
