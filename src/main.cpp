@@ -33,30 +33,22 @@ struct fVektor {
 	GLfloat z;
 } normV;
 
-void DrawCube();
+void DrawCube(int i, int width, int height);
 void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
 
 int main() {
 
-	int width = 1600;
-	int height = 800;
+	const int width = 1600;
+	const int height = 800;
 
-	struct Viewport {
-				int x;
-				int y;
-				int w;
-				int h;
-			};
-
-	Viewport view0 = {0, 0, width/2 -1, height -1};
-	Viewport view1 = {width/2, 0, width/2 -1, height -1};
+	int i = 0;
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
 	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
-	sf::Window App(sf::VideoMode(width, height, 32), "SFML OpenGL", sf::Style::Close,
-			Settings);
+	sf::Window App(sf::VideoMode(width, height, 32), "SFML OpenGL",
+			sf::Style::Close, Settings);
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
@@ -128,19 +120,35 @@ int main() {
 		glRotatef(rotx, 0.f, 1.f, 0.f);
 		glRotatef(roty, 1.f, 0.f, 0.f);
 
-		glViewport(view0.x, view0.y, view0.w, view0.h); // Linker Viewport
-		DrawCube();
-
-		glViewport(view1.x, view1.y, view1.w, view1.h); //rechter Viewport
-		DrawCube();
-
+		// i==0 Viewport links
+		// i==1 Viewport rechts
+		for (i = 0; i < 2; i++) {
+			DrawCube(i, width, height);
+		}
 		App.Display();
+
 	}
 	return EXIT_SUCCESS;
 }
 
 // Fkt. zum Zeichnen des Würfels
-void DrawCube() {
+void DrawCube(int i, int width, int height) {
+
+	struct Viewport {
+		int x;
+		int y;
+		int w;
+		int h;
+	};
+
+	Viewport view0 = { 0, 0, width / 2 - 1, height - 1 };
+	Viewport view1 = { width / 2, 0, width / 2 - 1, height - 1 };
+
+	if (i == 0) {
+		glViewport(view0.x, view0.y, view0.w, view0.h); // linker Viewport
+	} else if (i == 1) {
+		glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
+	}
 
 	glBegin(GL_QUADS); // Start der Primitiv-Definition
 
@@ -188,7 +196,6 @@ void DrawCube() {
 	glVertex3fv(v2);
 
 	glEnd();
-
 }
 
 // Fkt. zur Berechnung des Normalenvektors
