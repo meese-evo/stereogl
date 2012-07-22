@@ -46,15 +46,32 @@ int main() {
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 
+	int i = 0;
+	int j = 0;
+	GLfloat offset = 80;
+
 	// Vertexe des Würfels
-	GLfloat v0[3] = { -50, -50, 50 };
-	GLfloat v1[3] = { -50, 50, 50 };
-	GLfloat v2[3] = { 50, 50, 50 };
-	GLfloat v3[3] = { 50, -50, 50 };
-	GLfloat v4[3] = { 50, -50, -50 };
-	GLfloat v5[3] = { 50, 50, -50 };
-	GLfloat v6[3] = { -50, -50, -50 };
-	GLfloat v7[3] = { -50, 50, -50 };
+	const GLfloat vs0[3] = { -50, -50, 50 };
+	const GLfloat vs1[3] = { -50, 50, 50 };
+	const GLfloat vs2[3] = { 50, 50, 50 };
+	const GLfloat vs3[3] = { 50, -50, 50 };
+	const GLfloat vs4[3] = { 50, -50, -50 };
+	const GLfloat vs5[3] = { 50, 50, -50 };
+	const GLfloat vs6[3] = { -50, -50, -50 };
+	const GLfloat vs7[3] = { -50, 50, -50 };
+
+	GLfloat v0[3], v1[3], v2[3], v3[3], v4[3], v5[3], v6[3], v7[3];
+
+	for (i=0; i<3; i++) {
+		v0[i] = vs0[i];
+		v1[i] = vs1[i];
+		v2[i] = vs2[i];
+		v3[i] = vs3[i];
+		v4[i] = vs4[i];
+		v5[i] = vs5[i];
+		v6[i] = vs6[i];
+		v7[i] = vs7[i];
+	}
 
 	// Rotation
 	float rotx = 0;
@@ -123,53 +140,77 @@ int main() {
 //		cout << "Norm.-Z: " << normV.z << endl;
 //		cout << endl << endl;
 
-		//Fläche Vorderseite - Grün
-		glColor3f(0, 1, 0);
-		glNormal3f(0, 0, 1);
-		glVertex3fv(v0);
-		glVertex3fv(v1);
-		glVertex3fv(v2);
-		glVertex3fv(v3);
+		for (i = 0; i < 2; i++) {
+			if (i == 0) {
+				for (j = 0; j < 1; j++) {
+					v0[j] = vs0[j] - offset;
+					v1[j] = vs1[j] - offset;
+					v2[j] = vs2[j] - offset;
+					v3[j] = vs3[j] - offset;
+					v4[j] = vs4[j] - offset;
+					v5[j] = vs5[j] - offset;
+					v6[j] = vs6[j] - offset;
+					v7[j] = vs7[j] - offset;
+				}
+			}
 
-		//Fläche Rechts - Rot
-		glColor3f(1, 0, 0);
-		glNormal3f(1, 0, 0);
-		glVertex3fv(v4);
-		glVertex3fv(v5);
-		glVertex3fv(v2);
-		glVertex3fv(v3);
+			else if (i == 1) {
+				for (j = 0; j < 1; j++) {
+					v0[j] = vs0[j] + offset;
+					v1[j] = vs1[j] + offset;
+					v2[j] = vs2[j] + offset;
+					v3[j] = vs3[j] + offset;
+					v4[j] = vs4[j] + offset;
+					v5[j] = vs5[j] + offset;
+					v6[j] = vs6[j] + offset;
+					v7[j] = vs7[j] + offset;
+				}
+			}
 
-		//Fläche Rückseite - Blau
-		glColor3f(0, 0, 1); // Definition der Farbe
-		glNormal3f(0, 0, -1);
-		glVertex3fv(v6);
-		glVertex3fv(v7);
-		glVertex3fv(v5);
-		glVertex3fv(v4);
-
-		//Fläche Links - Hellblau
-		glColor3f(0, 1, 1);
-		glNormal3f(-1, 0, 0);
-		glVertex3fv(v6);
-		glVertex3fv(v7);
-		glVertex3fv(v1);
-		glVertex3fv(v0);
-
-		//Fläche Unten - Lila
-		glColor3f(1, 0, 1);
-		glNormal3f(0, -1, 0);
-		glVertex3fv(v0);
-		glVertex3fv(v6);
-		glVertex3fv(v4);
-		glVertex3fv(v3);
-
-		//Fläche Oben - Gelb
-		glColor3f(1, 1, 0);
-		glNormal3f(0, 1, 0);
-		glVertex3fv(v1);
-		glVertex3fv(v7);
-		glVertex3fv(v5);
-		glVertex3fv(v2);
+			// Würfel zeichnen
+			// Fläche Vorderseite - Grün
+			glColor3f(0, 1, 0);
+			glNormal3f(0, 0, 1);
+			glVertex3fv (v0);
+			glVertex3fv (v1);
+			glVertex3fv (v2);
+			glVertex3fv (v3);
+			// Fläche Rechts - Rot
+			glColor3f(1, 0, 0);
+			glNormal3f(1, 0, 0);
+			glVertex3fv (v4);
+			glVertex3fv (v5);
+			glVertex3fv(v2);
+			glVertex3fv(v3);
+			// Fläche Rückseite - Blau
+			glColor3f(0, 0, 1); // Definition der Farbe
+			glNormal3f(0, 0, -1);
+			glVertex3fv (v6);
+			glVertex3fv (v7);
+			glVertex3fv(v5);
+			glVertex3fv(v4);
+			// Fläche Links - Hellblau
+			glColor3f(0, 1, 1);
+			glNormal3f(-1, 0, 0);
+			glVertex3fv(v6);
+			glVertex3fv(v7);
+			glVertex3fv(v1);
+			glVertex3fv(v0);
+			// Fläche Unten - Lila
+			glColor3f(1, 0, 1);
+			glNormal3f(0, -1, 0);
+			glVertex3fv(v0);
+			glVertex3fv(v6);
+			glVertex3fv(v4);
+			glVertex3fv(v3);
+			// Fläche Oben - Gelb
+			glColor3f(1, 1, 0);
+			glNormal3f(0, 1, 0);
+			glVertex3fv(v1);
+			glVertex3fv(v7);
+			glVertex3fv(v5);
+			glVertex3fv(v2);
+		}
 
 		glEnd();
 
@@ -192,7 +233,7 @@ void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]) {
 	V1V3.z = V3[2] - V1[2]; // mit Berührpunkt V1
 	// Berechnung des Kreuzprodukts
 	KREUZ.x = +((V1V2.y * V1V3.z) - (V1V2.z * V1V3.y));
-	KREUZ.y = -((V1V2.x * V1V3.z) - (V1V2.z * V1V3.x));
+	KREUZ.y = ((-1) * ((V1V2.x * V1V3.z)) - (V1V2.z * V1V3.x));
 	KREUZ.z = +((V1V2.x * V1V3.y) - (V1V2.y * V1V3.x));
 	// Prüfen des Vektors
 	Betrag = sqrt( //Länge des Vektors ermitteln
