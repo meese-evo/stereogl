@@ -46,7 +46,7 @@ int main() {
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
-	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
+	Settings.AntialiasingLevel = 4; // Request 4 levels of antialiasing
 	sf::Window App(sf::VideoMode(width, height, 32), "SFML OpenGL",
 			sf::Style::Close, Settings);
 
