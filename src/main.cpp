@@ -14,7 +14,18 @@
 #include <math.h>
 
 using namespace std;
-//using namespace sf;
+
+const GLfloat offset = 80;
+
+// Vertexe des Ur-Würfels
+const GLfloat v0[3] = { -50, -50, 50 };
+const GLfloat v1[3] = { -50, 50, 50 };
+const GLfloat v2[3] = { 50, 50, 50 };
+const GLfloat v3[3] = { 50, -50, 50 };
+const GLfloat v4[3] = { 50, -50, -50 };
+const GLfloat v5[3] = { 50, 50, -50 };
+const GLfloat v6[3] = { -50, -50, -50 };
+const GLfloat v7[3] = { -50, 50, -50 };
 
 struct fVektor {
 	GLfloat x;
@@ -22,6 +33,7 @@ struct fVektor {
 	GLfloat z;
 } normV;
 
+void DrawCube();
 void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
 
 int main() {
@@ -30,7 +42,7 @@ int main() {
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
 	Settings.StencilBits = 8; // Request a 8 bits stencil buffer
 	Settings.AntialiasingLevel = 2; // Request 2 levels of antialiasing
-	sf::Window App(sf::VideoMode(800, 800, 32), "SFML OpenGL", sf::Style::Close,
+	sf::Window App(sf::VideoMode(800, 400, 32), "SFML OpenGL", sf::Style::Close,
 			Settings);
 
 	// Set color and depth clear value
@@ -45,33 +57,6 @@ int main() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
-
-	int i = 0;
-	int j = 0;
-	GLfloat offset = 80;
-
-	// Vertexe des Würfels
-	const GLfloat vs0[3] = { -50, -50, 50 };
-	const GLfloat vs1[3] = { -50, 50, 50 };
-	const GLfloat vs2[3] = { 50, 50, 50 };
-	const GLfloat vs3[3] = { 50, -50, 50 };
-	const GLfloat vs4[3] = { 50, -50, -50 };
-	const GLfloat vs5[3] = { 50, 50, -50 };
-	const GLfloat vs6[3] = { -50, -50, -50 };
-	const GLfloat vs7[3] = { -50, 50, -50 };
-
-	GLfloat v0[3], v1[3], v2[3], v3[3], v4[3], v5[3], v6[3], v7[3];
-
-	for (i=0; i<3; i++) {
-		v0[i] = vs0[i];
-		v1[i] = vs1[i];
-		v2[i] = vs2[i];
-		v3[i] = vs3[i];
-		v4[i] = vs4[i];
-		v5[i] = vs5[i];
-		v6[i] = vs6[i];
-		v7[i] = vs7[i];
-	}
 
 	// Rotation
 	float rotx = 0;
@@ -106,10 +91,10 @@ int main() {
 					roty += 5;
 				break;
 
-				// Adjust OpenGL viewport on resize event
-			case sf::Event::Resized:
-				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
-				break;
+//				// Adjust OpenGL viewport on resize event
+//			case sf::Event::Resized:
+//				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+//				break;
 
 			default:
 				break;
@@ -129,94 +114,68 @@ int main() {
 		glTranslatef(0.f, 0.f, -200.f);
 		glRotatef(rotx, 0.f, 1.f, 0.f);
 		glRotatef(roty, 1.f, 0.f, 0.f);
-		//		glRotatef(Clock.GetElapsedTime() * 90, 0.f, 0.f, 1.f);
 
-		glBegin(GL_QUADS); // Start der Primitiv-Definition
+		glViewport(0, 0, 399, 399); // Linker Viewport
+		DrawCube();
 
-//		// Berechnung des Normalenvektors
-//		CalcNormal(v1, v7, v5);
-//		cout << "Norm.-X: " << normV.x << endl;
-//		cout << "Norm.-Y: " << normV.y << endl;
-//		cout << "Norm.-Z: " << normV.z << endl;
-//		cout << endl << endl;
-
-		for (i = 0; i < 2; i++) {
-			if (i == 0) {
-				for (j = 0; j < 1; j++) {
-					v0[j] = vs0[j] - offset;
-					v1[j] = vs1[j] - offset;
-					v2[j] = vs2[j] - offset;
-					v3[j] = vs3[j] - offset;
-					v4[j] = vs4[j] - offset;
-					v5[j] = vs5[j] - offset;
-					v6[j] = vs6[j] - offset;
-					v7[j] = vs7[j] - offset;
-				}
-			}
-
-			else if (i == 1) {
-				for (j = 0; j < 1; j++) {
-					v0[j] = vs0[j] + offset;
-					v1[j] = vs1[j] + offset;
-					v2[j] = vs2[j] + offset;
-					v3[j] = vs3[j] + offset;
-					v4[j] = vs4[j] + offset;
-					v5[j] = vs5[j] + offset;
-					v6[j] = vs6[j] + offset;
-					v7[j] = vs7[j] + offset;
-				}
-			}
-
-			// Würfel zeichnen
-			// Fläche Vorderseite - Grün
-			glColor3f(0, 1, 0);
-			glNormal3f(0, 0, 1);
-			glVertex3fv (v0);
-			glVertex3fv (v1);
-			glVertex3fv (v2);
-			glVertex3fv (v3);
-			// Fläche Rechts - Rot
-			glColor3f(1, 0, 0);
-			glNormal3f(1, 0, 0);
-			glVertex3fv (v4);
-			glVertex3fv (v5);
-			glVertex3fv(v2);
-			glVertex3fv(v3);
-			// Fläche Rückseite - Blau
-			glColor3f(0, 0, 1); // Definition der Farbe
-			glNormal3f(0, 0, -1);
-			glVertex3fv (v6);
-			glVertex3fv (v7);
-			glVertex3fv(v5);
-			glVertex3fv(v4);
-			// Fläche Links - Hellblau
-			glColor3f(0, 1, 1);
-			glNormal3f(-1, 0, 0);
-			glVertex3fv(v6);
-			glVertex3fv(v7);
-			glVertex3fv(v1);
-			glVertex3fv(v0);
-			// Fläche Unten - Lila
-			glColor3f(1, 0, 1);
-			glNormal3f(0, -1, 0);
-			glVertex3fv(v0);
-			glVertex3fv(v6);
-			glVertex3fv(v4);
-			glVertex3fv(v3);
-			// Fläche Oben - Gelb
-			glColor3f(1, 1, 0);
-			glNormal3f(0, 1, 0);
-			glVertex3fv(v1);
-			glVertex3fv(v7);
-			glVertex3fv(v5);
-			glVertex3fv(v2);
-		}
-
-		glEnd();
+		glViewport(400, 0, 399, 399); //rechter Viewport
+		DrawCube();
 
 		App.Display();
 	}
 	return EXIT_SUCCESS;
+}
+
+// Fkt. zum Zeichnen des Würfels
+void DrawCube() {
+
+	glBegin(GL_QUADS); // Start der Primitiv-Definition
+
+	// Fläche Vorderseite - Grün
+	glColor3f(0, 1, 0);
+	glNormal3f(0, 0, 1);
+	glVertex3fv(v0);
+	glVertex3fv(v1);
+	glVertex3fv(v2);
+	glVertex3fv(v3);
+	// Fläche Rechts - Rot
+	glColor3f(1, 0, 0);
+	glNormal3f(1, 0, 0);
+	glVertex3fv(v4);
+	glVertex3fv(v5);
+	glVertex3fv(v2);
+	glVertex3fv(v3);
+	// Fläche Rückseite - Blau
+	glColor3f(0, 0, 1); // Definition der Farbe
+	glNormal3f(0, 0, -1);
+	glVertex3fv(v6);
+	glVertex3fv(v7);
+	glVertex3fv(v5);
+	glVertex3fv(v4);
+	// Fläche Links - Hellblau
+	glColor3f(0, 1, 1);
+	glNormal3f(-1, 0, 0);
+	glVertex3fv(v6);
+	glVertex3fv(v7);
+	glVertex3fv(v1);
+	glVertex3fv(v0);
+	// Fläche Unten - Lila
+	glColor3f(1, 0, 1);
+	glNormal3f(0, -1, 0);
+	glVertex3fv(v0);
+	glVertex3fv(v6);
+	glVertex3fv(v4);
+	glVertex3fv(v3);
+	// Fläche Oben - Gelb
+	glColor3f(1, 1, 0);
+	glNormal3f(0, 1, 0);
+	glVertex3fv(v1);
+	glVertex3fv(v7);
+	glVertex3fv(v5);
+	glVertex3fv(v2);
+
+	glEnd();
+
 }
 
 // Fkt. zur Berechnung des Normalenvektors
