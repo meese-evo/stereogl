@@ -17,7 +17,7 @@ using namespace std;
 
 const GLfloat offset = 80;
 
-// Vertexe des Ur-Würfels
+// Vertexe des "Ur"-Würfels
 const GLfloat v0[3] = { -50, -50, 50 };
 const GLfloat v1[3] = { -50, 50, 50 };
 const GLfloat v2[3] = { 50, 50, 50 };
