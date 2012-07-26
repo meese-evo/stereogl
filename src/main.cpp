@@ -18,14 +18,23 @@ using namespace std;
 const GLfloat offset = 80;
 
 // Vertexe des "Ur"-Würfels
-const GLfloat v0[3] = { -50, -50, 50 };
-const GLfloat v1[3] = { -50, 50, 50 };
-const GLfloat v2[3] = { 50, 50, 50 };
-const GLfloat v3[3] = { 50, -50, 50 };
-const GLfloat v4[3] = { 50, -50, -50 };
-const GLfloat v5[3] = { 50, 50, -50 };
-const GLfloat v6[3] = { -50, -50, -50 };
-const GLfloat v7[3] = { -50, 50, -50 };
+//const GLfloat v0[3] = { -50, -50, 50 };
+//const GLfloat v1[3] = { -50, 50, 50 };
+//const GLfloat v2[3] = { 50, 50, 50 };
+//const GLfloat v3[3] = { 50, -50, 50 };
+//const GLfloat v4[3] = { 50, -50, -50 };
+//const GLfloat v5[3] = { 50, 50, -50 };
+//const GLfloat v6[3] = { -50, -50, -50 };
+//const GLfloat v7[3] = { -50, 50, -50 };
+
+const GLfloat v0[3] = { 0, -70.71, 50 };
+const GLfloat v1[3] = { -70.71, 0, 50 };
+const GLfloat v2[3] = { 0, 70.71, 50 };
+const GLfloat v3[3] = { 70.71, 0, 50 };
+const GLfloat v4[3] = { 70.71, 0, -50 };
+const GLfloat v5[3] = { 0, 70.71, -50 };
+const GLfloat v6[3] = { 0, -70.71, -50 };
+const GLfloat v7[3] = { -70.71, 0, -50 };
 
 struct fVektor {
 	GLfloat x;
