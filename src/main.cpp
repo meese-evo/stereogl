@@ -18,23 +18,31 @@ using namespace std;
 const GLfloat offset = 80;
 
 // Vertexe des "Ur"-Würfels
-//const GLfloat v0[3] = { -50, -50, 50 };
-//const GLfloat v1[3] = { -50, 50, 50 };
-//const GLfloat v2[3] = { 50, 50, 50 };
-//const GLfloat v3[3] = { 50, -50, 50 };
-//const GLfloat v4[3] = { 50, -50, -50 };
-//const GLfloat v5[3] = { 50, 50, -50 };
-//const GLfloat v6[3] = { -50, -50, -50 };
-//const GLfloat v7[3] = { -50, 50, -50 };
+const GLfloat v0[3] = { -35, -35, 50 };
+const GLfloat v1[3] = { -35, 35, 50 };
+const GLfloat v2[3] = { 35, 35, 50 };
+const GLfloat v3[3] = { 35, -35, 50 };
+const GLfloat v4[3] = { 35, -35, -50 };
+const GLfloat v5[3] = { 35, 35, -50 };
+const GLfloat v6[3] = { -35, -35, -50 };
+const GLfloat v7[3] = { -35, 35, -50 };
 
-const GLfloat v0[3] = { 0, -70.71, 50 };
-const GLfloat v1[3] = { -70.71, 0, 50 };
-const GLfloat v2[3] = { 0, 70.71, 50 };
-const GLfloat v3[3] = { 70.71, 0, 50 };
-const GLfloat v4[3] = { 70.71, 0, -50 };
-const GLfloat v5[3] = { 0, 70.71, -50 };
-const GLfloat v6[3] = { 0, -70.71, -50 };
-const GLfloat v7[3] = { -70.71, 0, -50 };
+//const GLfloat v0[3] = { 0, -70.71, 50 };
+//const GLfloat v1[3] = { -70.71, 0, 50 };
+//const GLfloat v2[3] = { 0, 70.71, 50 };
+//const GLfloat v3[3] = { 70.71, 0, 50 };
+//const GLfloat v4[3] = { 70.71, 0, -50 };
+//const GLfloat v5[3] = { 0, 70.71, -50 };
+//const GLfloat v6[3] = { 0, -70.71, -50 };
+//const GLfloat v7[3] = { -70.71, 0, -50 };
+
+// Vertexe des Daches
+const GLfloat v8[3] = { 0, 70, 60 };
+const GLfloat v9[3] = { 43.8, 26.3, 60 };
+const GLfloat v10[3] = { 43.8, 26.3, -60 };
+const GLfloat v11[3] = { 0, 70, -60 };
+const GLfloat v12[3] = { -43.8, 26.3, 60 };
+const GLfloat v13[3] = { -43.8, 26.3, -60 };
 
 struct fVektor {
 	GLfloat x;
@@ -129,6 +137,10 @@ int main() {
 		glRotatef(rotx, 0.f, 1.f, 0.f);
 		glRotatef(roty, 1.f, 0.f, 0.f);
 
+		CalcNormal(v8[3], v9[3], v10[3]);
+
+
+
 		// i==0 Viewport links
 		// i==1 Viewport rechts
 		for (i = 0; i < 2; i++) {
@@ -150,6 +162,8 @@ void DrawCube(int i, int width, int height) {
 		int h;
 	};
 
+	float giebel = v8[2] - v0[2];
+
 	Viewport view0 = { 0, 0, width / 2 - 1, height - 1 };
 	Viewport view1 = { width / 2, 0, width / 2 - 1, height - 1 };
 
@@ -159,51 +173,78 @@ void DrawCube(int i, int width, int height) {
 		glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
 	}
 
-	glBegin(GL_QUADS); // Start der Primitiv-Definition
+	glBegin(GL_QUADS); // Dach und Seitenwände zeichnen
+		// Fläche Vorderseite - Grün
+		glColor3f(0, 1, 0); // Definition der Farbe
+		glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
+		glVertex3fv(v0);
+		glVertex3fv(v1);
+		glVertex3fv(v2);
+		glVertex3fv(v3);
+		// Fläche Rechts - Rot
+		glColor3f(1, 0, 0);
+		glNormal3f(1, 0, 0);
+		glVertex3fv(v4);
+		glVertex3fv(v5);
+		glVertex3fv(v2);
+		glVertex3fv(v3);
+		// Fläche Rückseite - Blau
+		glColor3f(0, 0, 1);
+		glNormal3f(0, 0, -1);
+		glVertex3fv(v6);
+		glVertex3fv(v7);
+		glVertex3fv(v5);
+		glVertex3fv(v4);
+		// Fläche Links - Hellblau
+		glColor3f(0, 1, 1);
+		glNormal3f(-1, 0, 0);
+		glVertex3fv(v6);
+		glVertex3fv(v7);
+		glVertex3fv(v1);
+		glVertex3fv(v0);
+		// Fläche Unten - Lila
+		glColor3f(1, 0, 1);
+		glNormal3f(0, -1, 0);
+		glVertex3fv(v0);
+		glVertex3fv(v6);
+		glVertex3fv(v4);
+		glVertex3fv(v3);
+//		// Fläche Oben - Gelb
+//		glColor3f(1, 1, 0);
+//		glNormal3f(0, 1, 0);
+//		glVertex3fv(v1);
+//		glVertex3fv(v7);
+//		glVertex3fv(v5);
+//		glVertex3fv(v2);
+		// Fläche Dach rechts - Gelb
+		glColor3f(1, 1, 0);
+		glNormal3f(0, 1, 0);
+		glVertex3fv(v8);
+		glVertex3fv(v9);
+		glVertex3fv(v10);
+		glVertex3fv(v11);
+		// Fläche Dach links - Gelb
+		glColor3f(1, 1, 0);
+		glNormal3f(0, 1, 0);
+		glVertex3fv(v8);
+		glVertex3fv(v12);
+		glVertex3fv(v13);
+		glVertex3fv(v11);
+	glEnd();
 
-	// Fläche Vorderseite - Grün
-	glColor3f(0, 1, 0); // Definition der Farbe
-	glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
-	glVertex3fv(v0);
-	glVertex3fv(v1);
-	glVertex3fv(v2);
-	glVertex3fv(v3);
-	// Fläche Rechts - Rot
-	glColor3f(1, 0, 0);
-	glNormal3f(1, 0, 0);
-	glVertex3fv(v4);
-	glVertex3fv(v5);
-	glVertex3fv(v2);
-	glVertex3fv(v3);
-	// Fläche Rückseite - Blau
-	glColor3f(0, 0, 1);
-	glNormal3f(0, 0, -1);
-	glVertex3fv(v6);
-	glVertex3fv(v7);
-	glVertex3fv(v5);
-	glVertex3fv(v4);
-	// Fläche Links - Hellblau
-	glColor3f(0, 1, 1);
-	glNormal3f(-1, 0, 0);
-	glVertex3fv(v6);
-	glVertex3fv(v7);
-	glVertex3fv(v1);
-	glVertex3fv(v0);
-	// Fläche Unten - Lila
-	glColor3f(1, 0, 1);
-	glNormal3f(0, -1, 0);
-	glVertex3fv(v0);
-	glVertex3fv(v6);
-	glVertex3fv(v4);
-	glVertex3fv(v3);
-	// Fläche Oben - Gelb
-	glColor3f(1, 1, 0);
-	glNormal3f(0, 1, 0);
-	glVertex3fv(v1);
-	glVertex3fv(v7);
-	glVertex3fv(v5);
-	glVertex3fv(v2);
-
+	glBegin(GL_TRIANGLES); // Giebel zeichnen
+		// Fläche Vorderseite - Grün
+		glColor3f(0, 1, 0);
+		glNormal3f(0, 0, 1);
+		glVertex3f(v12[0], v12[1], v12[2]-giebel);
+		glVertex3f(v9[0], v9[1], v9[2]-giebel);
+		glVertex3f(v8[0], v8[1], v8[2]-giebel);
+		// Fläche Rückseite - Blau
+		glColor3f(0, 0, 1);
+		glNormal3f(0, 0, -1);
+		glVertex3f(v13[0], v13[1], v13[2]+giebel);
+		glVertex3f(v10[0], v10[1], v10[2]+giebel);
+		glVertex3f(v11[0], v11[1], v11[2]+giebel);
 	glEnd();
 }
 
