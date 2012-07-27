@@ -27,15 +27,6 @@ const GLfloat v5[3] = { 35, 35, -50 };
 const GLfloat v6[3] = { -35, -35, -50 };
 const GLfloat v7[3] = { -35, 35, -50 };
 
-//const GLfloat v0[3] = { 0, -70.71, 50 };
-//const GLfloat v1[3] = { -70.71, 0, 50 };
-//const GLfloat v2[3] = { 0, 70.71, 50 };
-//const GLfloat v3[3] = { 70.71, 0, 50 };
-//const GLfloat v4[3] = { 70.71, 0, -50 };
-//const GLfloat v5[3] = { 0, 70.71, -50 };
-//const GLfloat v6[3] = { 0, -70.71, -50 };
-//const GLfloat v7[3] = { -70.71, 0, -50 };
-
 // Vertexe des Daches
 const GLfloat v8[3] = { 0, 70, 60 };
 const GLfloat v9[3] = { 43.8, 26.3, 60 };
@@ -43,6 +34,16 @@ const GLfloat v10[3] = { 43.8, 26.3, -60 };
 const GLfloat v11[3] = { 0, 70, -60 };
 const GLfloat v12[3] = { -43.8, 26.3, 60 };
 const GLfloat v13[3] = { -43.8, 26.3, -60 };
+
+// Vertexe des Schornsteins
+const GLfloat v14[3] = { 7, 50, -29 };
+const GLfloat v15[3] = { 7, 78, -29 };
+const GLfloat v16[3] = { 17, 78, -29 };
+const GLfloat v17[3] = { 17, 50, -29 };
+const GLfloat v18[3] = { 17, 50, -39 };
+const GLfloat v19[3] = { 17, 78, -39 };
+const GLfloat v20[3] = { 7, 50, -39 };
+const GLfloat v21[3] = { 7, 78, -39 };
 
 struct fVektor {
 	GLfloat x;
@@ -137,9 +138,13 @@ int main() {
 		glRotatef(rotx, 0.f, 1.f, 0.f);
 		glRotatef(roty, 1.f, 0.f, 0.f);
 
-		CalcNormal(v8[3], v9[3], v10[3]);
-
-
+//		// Berechnung des Normalenvektors
+//		// Achtung! Die Vertexe dürfen dann kein const sein!
+//		CalcNormal(v8, v12, v13);
+//		cout << "Norm.-X: " << normV.x << endl;
+//		cout << "Norm.-Y: " << normV.y << endl;
+//		cout << "Norm.-Z: " << normV.z << endl;
+//		cout << endl << endl;
 
 		// i==0 Viewport links
 		// i==1 Viewport rechts
@@ -218,14 +223,14 @@ void DrawCube(int i, int width, int height) {
 //		glVertex3fv(v2);
 		// Fläche Dach rechts - Gelb
 		glColor3f(1, 1, 0);
-		glNormal3f(0, 1, 0);
+		glNormal3f(0.706298, 0.707914 , 0);
 		glVertex3fv(v8);
 		glVertex3fv(v9);
 		glVertex3fv(v10);
 		glVertex3fv(v11);
 		// Fläche Dach links - Gelb
 		glColor3f(1, 1, 0);
-		glNormal3f(0, 1, 0);
+		glNormal3f(-0.706298, 0.707914 , 0);
 		glVertex3fv(v8);
 		glVertex3fv(v12);
 		glVertex3fv(v13);
@@ -246,6 +251,60 @@ void DrawCube(int i, int width, int height) {
 		glVertex3f(v10[0], v10[1], v10[2]+giebel);
 		glVertex3f(v11[0], v11[1], v11[2]+giebel);
 	glEnd();
+
+	glBegin(GL_QUADS); // Schornstein
+			// Fläche Vorderseite - Grün
+			glColor3f(0, 1, 0); // Definition der Farbe
+			glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
+			glVertex3fv(v14);
+			glVertex3fv(v15);
+			glVertex3fv(v16);
+			glVertex3fv(v17);
+			// Fläche Rechts - Rot
+			glColor3f(1, 0, 0);
+			glNormal3f(1, 0, 0);
+			glVertex3fv(v18);
+			glVertex3fv(v19);
+			glVertex3fv(v16);
+			glVertex3fv(v17);
+			// Fläche Rückseite - Blau
+			glColor3f(0, 0, 1);
+			glNormal3f(0, 0, -1);
+			glVertex3fv(v20);
+			glVertex3fv(v21);
+			glVertex3fv(v19);
+			glVertex3fv(v18);
+			// Fläche Links - Hellblau
+			glColor3f(0, 1, 1);
+			glNormal3f(-1, 0, 0);
+			glVertex3fv(v20);
+			glVertex3fv(v21);
+			glVertex3fv(v15);
+			glVertex3fv(v14);
+			// Fläche Unten - Lila
+			glColor3f(1, 0, 1);
+			glNormal3f(0, -1, 0);
+			glVertex3fv(v14);
+			glVertex3fv(v20);
+			glVertex3fv(v18);
+			glVertex3fv(v17);
+			// Fläche Oben - Gelb
+			glColor3f(1, 1, 0);
+			glNormal3f(0, 1, 0);
+			glVertex3f(v15[0], v15[1]-3, v15[2]);
+			glVertex3f(v21[0], v21[1]-3, v21[2]);
+			glVertex3f(v19[0], v19[1]-3, v19[2]);
+			glVertex3f(v16[0], v16[1]-3, v16[2]);
+		glEnd();
+
+
+		glTranslatef(v15[1]-3, 20.0, -34);// Center The Cylinder
+		glRotatef(90, v15[1]-3, 20.0, -34);
+		GLUquadricObj *quadratic;// Storage For Our Quadratic Objects
+		quadratic=gluNewQuadric();// Create A Pointer To The Quadric Object ( NEW )
+		gluQuadricNormals(quadratic, GLU_SMOOTH);// Create Smooth Normals ( NEW )
+		gluQuadricTexture(quadratic, GL_TRUE);// Create Texture Coords ( NEW )
+		gluCylinder(quadratic,10.0f,10.0f,50.0f,32,32);// Draw Our Cylinder
 }
 
 // Fkt. aus Markt&Technik "Jetzt lerne ich OpenGL"
