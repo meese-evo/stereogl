@@ -253,58 +253,61 @@ void DrawCube(int i, int width, int height) {
 	glEnd();
 
 	glBegin(GL_QUADS); // Schornstein
-			// Fläche Vorderseite - Grün
-			glColor3f(0, 1, 0); // Definition der Farbe
-			glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
-			glVertex3fv(v14);
-			glVertex3fv(v15);
-			glVertex3fv(v16);
-			glVertex3fv(v17);
-			// Fläche Rechts - Rot
-			glColor3f(1, 0, 0);
-			glNormal3f(1, 0, 0);
-			glVertex3fv(v18);
-			glVertex3fv(v19);
-			glVertex3fv(v16);
-			glVertex3fv(v17);
-			// Fläche Rückseite - Blau
-			glColor3f(0, 0, 1);
-			glNormal3f(0, 0, -1);
-			glVertex3fv(v20);
-			glVertex3fv(v21);
-			glVertex3fv(v19);
-			glVertex3fv(v18);
-			// Fläche Links - Hellblau
-			glColor3f(0, 1, 1);
-			glNormal3f(-1, 0, 0);
-			glVertex3fv(v20);
-			glVertex3fv(v21);
-			glVertex3fv(v15);
-			glVertex3fv(v14);
-			// Fläche Unten - Lila
-			glColor3f(1, 0, 1);
-			glNormal3f(0, -1, 0);
-			glVertex3fv(v14);
-			glVertex3fv(v20);
-			glVertex3fv(v18);
-			glVertex3fv(v17);
-			// Fläche Oben - Gelb
-			glColor3f(1, 1, 0);
-			glNormal3f(0, 1, 0);
-			glVertex3f(v15[0], v15[1]-3, v15[2]);
-			glVertex3f(v21[0], v21[1]-3, v21[2]);
-			glVertex3f(v19[0], v19[1]-3, v19[2]);
-			glVertex3f(v16[0], v16[1]-3, v16[2]);
-		glEnd();
+		// Fläche Vorderseite - Grün
+		glColor3f(0, 1, 0); // Definition der Farbe
+		glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
+		glVertex3fv(v14);
+		glVertex3fv(v15);
+		glVertex3fv(v16);
+		glVertex3fv(v17);
+		// Fläche Rechts - Rot
+		glColor3f(1, 0, 0);
+		glNormal3f(1, 0, 0);
+		glVertex3fv(v18);
+		glVertex3fv(v19);
+		glVertex3fv(v16);
+		glVertex3fv(v17);
+		// Fläche Rückseite - Blau
+		glColor3f(0, 0, 1);
+		glNormal3f(0, 0, -1);
+		glVertex3fv(v20);
+		glVertex3fv(v21);
+		glVertex3fv(v19);
+		glVertex3fv(v18);
+		// Fläche Links - Hellblau
+		glColor3f(0, 1, 1);
+		glNormal3f(-1, 0, 0);
+		glVertex3fv(v20);
+		glVertex3fv(v21);
+		glVertex3fv(v15);
+		glVertex3fv(v14);
+		// Fläche Unten - Lila
+		glColor3f(1, 0, 1);
+		glNormal3f(0, -1, 0);
+		glVertex3fv(v14);
+		glVertex3fv(v20);
+		glVertex3fv(v18);
+		glVertex3fv(v17);
+		// Fläche Oben - Gelb
+		glColor3f(1, 1, 0);
+		glNormal3f(0, 1, 0);
+		glVertex3f(v15[0], v15[1]-3, v15[2]);
+		glVertex3f(v21[0], v21[1]-3, v21[2]);
+		glVertex3f(v19[0], v19[1]-3, v19[2]);
+		glVertex3f(v16[0], v16[1]-3, v16[2]);
+	glEnd();
 
 
-		glTranslatef(v15[1]-3, 20.0, -34);// Center The Cylinder
-		glRotatef(90, v15[1]-3, 20.0, -34);
-		GLUquadricObj *quadratic;// Storage For Our Quadratic Objects
-		quadratic=gluNewQuadric();// Create A Pointer To The Quadric Object ( NEW )
-		gluQuadricNormals(quadratic, GLU_SMOOTH);// Create Smooth Normals ( NEW )
-		gluQuadricTexture(quadratic, GL_TRUE);// Create Texture Coords ( NEW )
-		gluCylinder(quadratic,10.0f,10.0f,50.0f,32,32);// Draw Our Cylinder
+//		// Schornsteinrohr - Zylinder
+//		// http://wiki.delphigl.com/index.php/glRotate
+//		// http://www.codeworx.org/opengl_tut18.php
+//		glTranslatef(v15[1]-3, 20.0, -34);// Center The Cylinder
+//		glRotatef(90, v15[1]-3, 20.0, -34);
+//		GLUquadricObj *quadratic;// Storage For Our Quadratic Objects
+//		quadratic=gluNewQuadric();// Create A Pointer To The Quadric Object ( NEW )
+//		gluQuadricNormals(quadratic, GLU_SMOOTH);// Create Smooth Normals ( NEW )
+//		gluQuadricTexture(quadratic, GL_TRUE);// Create Texture Coords ( NEW )
+//		gluCylinder(quadratic,10.0f,10.0f,50.0f,32,32);// Draw Our Cylinder
 }
 
 // Fkt. aus Markt&Technik "Jetzt lerne ich OpenGL"
