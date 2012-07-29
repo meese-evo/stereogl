@@ -45,6 +45,16 @@ const GLfloat v19[3] = { 17, 78, -39 };
 const GLfloat v20[3] = { 7, 50, -39 };
 const GLfloat v21[3] = { 7, 78, -39 };
 
+// Vertexe der Gaube
+const GLfloat v22[3] = { -26.25, 43.75, 8.75 };
+const GLfloat v23[3] = { -8.75, 61.75, 8.75 };
+const GLfloat v24[3] = { -26.25, 61.75, 8.75 };
+const GLfloat v25[3] = { -26.25, 43.75, -8.75 };
+const GLfloat v26[3] = { -8.75, 61.75, -8.75 };
+const GLfloat v27[3] = { -26.25, 61.75, -8.75 };
+const GLfloat v28[3] = { -26.25, 70, 0 };
+const GLfloat v29[3] = { 0, 70, 0 };
+
 struct fVektor {
 	GLfloat x;
 	GLfloat y;
@@ -178,7 +188,8 @@ void DrawCube(int i, int width, int height) {
 		glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
 	}
 
-	glBegin(GL_QUADS); // Dach und Seitenwände zeichnen
+	// Dach und Seitenwände zeichnen
+	glBegin(GL_QUADS);
 		// Fläche Vorderseite - Grün
 		glColor3f(0, 1, 0); // Definition der Farbe
 		glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
@@ -237,7 +248,8 @@ void DrawCube(int i, int width, int height) {
 		glVertex3fv(v11);
 	glEnd();
 
-	glBegin(GL_TRIANGLES); // Giebel zeichnen
+	// Giebel zeichnen
+	glBegin(GL_TRIANGLES);
 		// Fläche Vorderseite - Grün
 		glColor3f(0, 1, 0);
 		glNormal3f(0, 0, 1);
@@ -252,7 +264,8 @@ void DrawCube(int i, int width, int height) {
 		glVertex3f(v11[0], v11[1], v11[2]+giebel);
 	glEnd();
 
-	glBegin(GL_QUADS); // Schornstein
+	// Schornstein
+	glBegin(GL_QUADS);
 		// Fläche Vorderseite - Grün
 		glColor3f(0, 1, 0); // Definition der Farbe
 		glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
@@ -295,6 +308,53 @@ void DrawCube(int i, int width, int height) {
 		glVertex3f(v21[0], v21[1]-3, v21[2]);
 		glVertex3f(v19[0], v19[1]-3, v19[2]);
 		glVertex3f(v16[0], v16[1]-3, v16[2]);
+	glEnd();
+
+	// Seitenwände, Giebel der Gaube zeichnen
+	glBegin(GL_TRIANGLES);
+		// Fläche Vorderseite - Grün
+		glColor3f(0, 1, 0);
+		glNormal3f(0, 0, 1);
+		glVertex3fv(v22);
+		glVertex3fv(v23);
+		glVertex3fv(v24);
+		// Fläche Rückseite - Blau
+		glColor3f(0, 0, 1);
+		glNormal3f(0, 0, -1);
+		glVertex3fv(v25);
+		glVertex3fv(v26);
+		glVertex3fv(v27);
+		// Giebel - Hellblau
+		glColor3f(0, 1, 1);
+		glNormal3f(-1, 0, 0);
+		glVertex3fv(v27);
+		glVertex3fv(v24);
+		glVertex3fv(v28);
+	glEnd();
+
+	// Front und Dach der Gaube zeichnen
+	glBegin(GL_QUADS);
+		// Frontfläche Giebel - Hellblau
+		glColor3f(0, 1, 1);
+		glNormal3f(-1, 0, 0);
+		glVertex3fv(v22);
+		glVertex3fv(v24);
+		glVertex3fv(v27);
+		glVertex3fv(v25);
+		// Fläche Dach rechts - Gelb
+		glColor3f(1, 1, 0);
+		glNormal3f(0.706298, 0.707914 , 0);
+		glVertex3f(v28[0]-5, v28[1], v28[2]);
+		glVertex3fv(v29);
+		glVertex3f(v23[0]-5, v23[1]-5, v23[2]+5.5);
+		glVertex3f(v24[0]-5, v24[1]-5, v24[2]+5.5);
+		// Fläche Dach links - Gelb
+		glColor3f(1, 1, 0);
+		glNormal3f(-0.706298, 0.707914 , 0);
+		glVertex3f(v28[0]-5, v28[1], v28[2]);
+		glVertex3fv(v29);
+		glVertex3f(v26[0]-5, v26[1]-5, v26[2]-5.5);
+		glVertex3f(v27[0]-5, v27[1]-5, v27[2]-5.5);
 	glEnd();
 
 
