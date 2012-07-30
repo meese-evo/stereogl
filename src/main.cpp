@@ -87,7 +87,7 @@ const GLfloat fensterl[20][3] = { {-35.1, 7, -42},
 								 {-35.1, -7, 17},
 								 {-35.1, -7, 42},
 								 {-35.1, -25, 42} };
-
+// Links
 const GLfloat fensterr[24][3] = { {35.1, 7, -42},
 								 {35.1, 25, -42},
 								 {35.1, 25, -17},
@@ -117,7 +117,7 @@ const GLfloat fensterr[24][3] = { {35.1, 7, -42},
 								 {35.1, -7, 17},
 								 {35.1, -7, 42},
 								 {35.1, -25, 42} };
-
+// Vorne
 const GLfloat fensterv[16][4] = { {-30, 7, 50.1},
 								  {-30, 25, 50.1},
 								  {-5, 25, 50.1},
@@ -136,8 +136,35 @@ const GLfloat fensterv[16][4] = { {-30, 7, 50.1},
 								  {5, -25, 50.1},
 								  {5, -7, 50.1},
 								  {30, -7, 50.1},
-								  {30, -25, 50.1},
-};
+								  {30, -25, 50.1} };
+// Hinten
+const GLfloat fensterh[16][4] = { {-30, 7, -50.1},
+								  {-30, 25, -50.1},
+								  {-5, 25, -50.1},
+								  {-5, 7, -50.1},
+
+								  {5, 7, -50.1},
+								  {5, 25, -50.1},
+								  {30, 25, -50.1},
+								  {30, 7, -50.1},
+
+								  {-30, -25, -50.1},
+								  {-30, -7, -50.1},
+								  {-5, -7, -50.1},
+								  {-5, -25, -50.1},
+
+								  {5, -25, -50.1},
+								  {5, -7, -50.1},
+								  {30, -7, -50.1},
+								  {30, -25, -50.1} };
+
+const GLfloat fensterg[6][3] = { {0, 65, 50.1},
+								 {28.8, 36.3, 50.1},
+								 {-28.8, 36.3, 50.1},
+
+								 {0, 65, -50.1},
+								 {28.8, 36.3, -50.1},
+								 {-28.8, 36.3, -50.1} };
 
 struct fVektor {
 	GLfloat x;
@@ -311,13 +338,6 @@ void DrawCube(int i, int width, int height) {
 		glVertex3fv(v6);
 		glVertex3fv(v4);
 		glVertex3fv(v3);
-//		// Fläche Oben - Gelb
-//		glColor3f(1, 1, 0);
-//		glNormal3f(0, 1, 0);
-//		glVertex3fv(v1);
-//		glVertex3fv(v7);
-//		glVertex3fv(v5);
-//		glVertex3fv(v2);
 		// Fläche Dach rechts - Gelb
 		glColor3f(1, 1, 0);
 		glNormal3f(0.706298, 0.707914 , 0);
@@ -348,6 +368,36 @@ void DrawCube(int i, int width, int height) {
 		glVertex3f(v13[0], v13[1], v13[2]+giebel);
 		glVertex3f(v10[0], v10[1], v10[2]+giebel);
 		glVertex3f(v11[0], v11[1], v11[2]+giebel);
+		// Fensterrahmen vorne
+		glColor3f(0.373, 0.114, 0.055);
+		glNormal3f(0, 0, 1);
+		for(m=0; m<3; m++) {
+				glVertex3f(fensterg[m][0], fensterg[m][1], fensterg[m][2]);
+		}
+		// Fensterrahmen hinten
+		glColor3f(0.373, 0.114, 0.055);
+		glNormal3f(0, 0, -1);
+		for(m=3; m<6; m++) {
+				glVertex3f(fensterg[m][0], fensterg[m][1], fensterg[m][2]);
+		}
+		glNormal3f(0, 0, 1);
+		glColor3f(0.471, 0.776, 0.992);
+		for(m=0; m<3; m++) {
+			glVertex3f(fensterg[m][0], fensterg[m][1]-2, fensterg[m][2]+0.1);
+			m = m+1;
+			glVertex3f(fensterg[m][0]-3, fensterg[m][1]+1, fensterg[m][2]+0.1);
+			m = m+1;
+			glVertex3f(fensterg[m][0]+3, fensterg[m][1]+1, fensterg[m][2]+0.1);
+		}
+		glNormal3f(0, 0, -1);
+		glColor3f(0.471, 0.776, 0.992);
+		for(m=3; m<6; m++) {
+			glVertex3f(fensterg[m][0], fensterg[m][1]-2, fensterg[m][2]-0.1);
+			m = m+1;
+			glVertex3f(fensterg[m][0]-3, fensterg[m][1]+1, fensterg[m][2]-0.1);
+			m = m+1;
+			glVertex3f(fensterg[m][0]+3, fensterg[m][1]+1, fensterg[m][2]-0.1);
+		}
 	glEnd();
 
 	// Schornstein
@@ -396,6 +446,7 @@ void DrawCube(int i, int width, int height) {
 		glVertex3f(v16[0], v16[1]-3, v16[2]);
 	glEnd();
 
+	// Gaube
 	// Seitenwände, Giebel der Gaube zeichnen
 	glBegin(GL_TRIANGLES);
 		// Fläche Vorderseite - Grün
@@ -417,7 +468,6 @@ void DrawCube(int i, int width, int height) {
 		glVertex3fv(v24);
 		glVertex3fv(v28);
 	glEnd();
-
 	// Front, Fenster und Dach der Gaube zeichnen
 	glBegin(GL_QUADS);
 		// Frontfläche Giebel - Hellblau
@@ -491,7 +541,12 @@ void DrawCube(int i, int width, int height) {
 		for(m=0; m<16; m++) {
 				glVertex3f(fensterv[m][0], fensterv[m][1], fensterv[m][2]);
 		}
-		//Fensterscheibe
+		// hinten
+		glNormal3f(0, 0, -1);
+		for(m=0; m<16; m++) {
+				glVertex3f(fensterh[m][0], fensterh[m][1], fensterh[m][2]);
+		}
+		//Fensterscheiben
 		glColor3f(0.471, 0.776, 0.992);
 		// links
 		glNormal3f(-1, 0, 0);
@@ -525,6 +580,17 @@ void DrawCube(int i, int width, int height) {
 			glVertex3f(fensterv[m][0]-1, fensterv[m][1]-1, fensterv[m][2]+0.1);
 			m = m+1;
 			glVertex3f(fensterv[m][0]-1, fensterv[m][1]+1, fensterv[m][2]+0.1);
+		}
+		//hinten
+		glNormal3f(0, 0, -1);
+		for(m=0; m<16; m++) {
+			glVertex3f(fensterh[m][0]+1, fensterh[m][1]+1, fensterh[m][2]-0.1);
+			m = m+1;
+			glVertex3f(fensterh[m][0]+1, fensterh[m][1]-1, fensterh[m][2]-0.1);
+			m = m+1;
+			glVertex3f(fensterh[m][0]-1, fensterh[m][1]-1, fensterh[m][2]-0.1);
+			m = m+1;
+			glVertex3f(fensterh[m][0]-1, fensterh[m][1]+1, fensterh[m][2]-0.1);
 		}
 	glEnd();
 
