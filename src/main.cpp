@@ -62,11 +62,61 @@ const GLfloat v32[3] = { -35.1, -8, 9 };
 const GLfloat v33[3] = { -35.1, -35, 9 };
 
 // Vertexe Fenster
-// Fenster links der Tür
-const GLfloat v34[3] = { -35.1, -25, -42 };
-const GLfloat v35[3] = { -35.1, -7, -42 };
-const GLfloat v36[3] = { -35.1, -7, -17 };
-const GLfloat v37[3] = { -35.1, -25, -17 };
+// Links
+const GLfloat fensterl[20][3] = { {-35.1, 7, -42},
+								 {-35.1, 25, -42},
+								 {-35.1, 25, -17},
+								 {-35.1, 7, -17},
+
+								 {-35.1, 7, -12.5},
+								 {-35.1, 25, -12.5},
+								 {-35.1, 25, 12.5},
+								 {-35.1, 7, 12.5},
+
+								 {-35.1, 7, 17},
+								 {-35.1, 25, 17},
+								 {-35.1, 25, 42},
+								 {-35.1, 7, 42},
+
+								 {-35.1, -25, -42},
+								 {-35.1, -7, -42},
+								 {-35.1, -7, -17},
+								 {-35.1, -25, -17},
+
+								 {-35.1, -25, 17},
+								 {-35.1, -7, 17},
+								 {-35.1, -7, 42},
+								 {-35.1, -25, 42} };
+
+const GLfloat fensterr[24][3] = { {35.1, 7, -42},
+								 {35.1, 25, -42},
+								 {35.1, 25, -17},
+								 {35.1, 7, -17},
+
+								 {35.1, 7, -12.5},
+								 {35.1, 25, -12.5},
+								 {35.1, 25, 12.5},
+								 {35.1, 7, 12.5},
+
+								 {35.1, 7, 17},
+								 {35.1, 25, 17},
+								 {35.1, 25, 42},
+								 {35.1, 7, 42},
+
+								 {35.1, -25, -42},
+								 {35.1, -7, -42},
+								 {35.1, -7, -17},
+								 {35.1, -25, -17},
+
+								 {35.1, -25, -12.5},
+								 {35.1, -7, -12.5},
+								 {35.1, -7, 12.5},
+								 {35.1, -25, 12.5},
+
+								 {35.1, -25, 17},
+								 {35.1, -7, 17},
+								 {35.1, -7, 42},
+								 {35.1, -25, 42} };
 
 struct fVektor {
 	GLfloat x;
@@ -191,9 +241,7 @@ void DrawCube(int i, int width, int height) {
 	};
 
 	int j;
-	int m;
-
-	float offset[5] = { 0, 58, 0, 0, 0 };
+	int m, n;
 
 	float giebel = v8[2] - v0[2];
 
@@ -405,39 +453,42 @@ void DrawCube(int i, int width, int height) {
 		glVertex3f(v31[0]-0.1, v31[1]-4, v31[2]+4);
 		glVertex3f(v32[0]-0.1, v32[1]-4, v32[2]-4);
 		glVertex3f(v33[0]-0.1, v33[1]+4, v33[2]-4);
-		//Fenster links und rechts der Tür
-		for(j=0; j<2; j++){
-			//Fensterrahmen
-			glColor3f(0.373, 0.114, 0.055);
-			glNormal3f(-1, 0, 0);
-			glVertex3f(v34[0], v34[1], v34[2]+offset[j]);
-			glVertex3f(v35[0], v35[1], v35[2]+offset[j]);
-			glVertex3f(v36[0], v36[1], v36[2]+offset[j]);
-			glVertex3f(v37[0], v37[1], v37[2]+offset[j]);
-			// Fensterscheibe
-			glColor3f(0.471, 0.776, 0.992);
-			glNormal3f(-1, 0, 0);
-			glVertex3f(v34[0]-0.1, v34[1]+1, v34[2]+offset[j]+1);
-			glVertex3f(v35[0]-0.1, v35[1]-1, v35[2]+offset[j]+1);
-			glVertex3f(v36[0]-0.1, v36[1]-1, v36[2]+offset[j]-1);
-			glVertex3f(v37[0]-0.1, v37[1]+1, v37[2]+offset[j]-1);
+
+		//Fensterrahmen
+		glColor3f(0.373, 0.114, 0.055);
+		// links
+		glNormal3f(-1, 0, 0);
+		for(m=0; m<20; m++) {
+				glVertex3f(fensterl[m][0], fensterl[m][1], fensterl[m][2]);
 		}
-		//Fenster links und rechts der Tür
-		for(j=2; j<5; j++){
-			//Fensterrahmen
-			glColor3f(0.373, 0.114, 0.055);
-			glNormal3f(-1, 0, 0);
-			glVertex3f(v34[0], v34[1], v34[2]+offset[j]);
-			glVertex3f(v35[0], v35[1], v35[2]+offset[j]);
-			glVertex3f(v36[0], v36[1], v36[2]+offset[j]);
-			glVertex3f(v37[0], v37[1], v37[2]+offset[j]);
-			// Fensterscheibe
-			glColor3f(0.471, 0.776, 0.992);
-			glNormal3f(-1, 0, 0);
-			glVertex3f(v34[0]-0.1, v34[1]+1, v34[2]+offset[j]+1);
-			glVertex3f(v35[0]-0.1, v35[1]-1, v35[2]+offset[j]+1);
-			glVertex3f(v36[0]-0.1, v36[1]-1, v36[2]+offset[j]-1);
-			glVertex3f(v37[0]-0.1, v37[1]+1, v37[2]+offset[j]-1);
+		// rechts
+		glNormal3f(1, 0, 0);
+		for(m=0; m<24; m++) {
+				glVertex3f(fensterr[m][0], fensterr[m][1], fensterr[m][2]);
+		}
+		//Fensterscheibe
+		glColor3f(0.471, 0.776, 0.992);
+		// links
+		glNormal3f(-1, 0, 0);
+		for(m=0; m<20; m++) {
+			glVertex3f(fensterl[m][0]-0.1, fensterl[m][1]+1, fensterl[m][2]+1);
+			m = m+1;
+			glVertex3f(fensterl[m][0]-0.1, fensterl[m][1]-1, fensterl[m][2]+1);
+			m = m+1;
+			glVertex3f(fensterl[m][0]-0.1, fensterl[m][1]-1, fensterl[m][2]-1);
+			m = m+1;
+			glVertex3f(fensterl[m][0]-0.1, fensterl[m][1]+1, fensterl[m][2]-1);
+		}
+		// rechts
+		glNormal3f(1, 0, 0);
+		for(m=0; m<24; m++) {
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]+1);
+			m = m+1;
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]+1);
+			m = m+1;
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]-1);
+			m = m+1;
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]-1);
 		}
 	glEnd();
 
