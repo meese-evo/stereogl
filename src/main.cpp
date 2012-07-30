@@ -166,6 +166,22 @@ const GLfloat fensterg[6][3] = { {0, 65, 50.1},
 								 {28.8, 36.3, -50.1},
 								 {-28.8, 36.3, -50.1} };
 
+const GLfloat fenstergf[12][3] = { {-0.5, 63, 50.2},
+								   {-0.5, 37.3, 50.2},
+								   {-26.3, 37.3, 50.2},
+
+								   {0.5, 63, 50.2},
+								   {0.5, 37.3, 50.2},
+								   {26.3, 37.3, 50.2},
+
+								   {-0.5, 63, -50.2},
+								   {-0.5, 37.3, -50.2},
+								   {-26.3, 37.3, -50.2},
+
+								   {0.5, 63, -50.2},
+								   {0.5, 37.3, -50.2},
+								   {26.3, 37.3, -50.2} };
+
 struct fVektor {
 	GLfloat x;
 	GLfloat y;
@@ -382,21 +398,21 @@ void DrawCube(int i, int width, int height) {
 		}
 		glNormal3f(0, 0, 1);
 		glColor3f(0.471, 0.776, 0.992);
-		for(m=0; m<3; m++) {
-			glVertex3f(fensterg[m][0], fensterg[m][1]-2, fensterg[m][2]+0.1);
+		for(m=0; m<6; m++) {
+			glVertex3f(fenstergf[m][0], fenstergf[m][1], fenstergf[m][2]);
 			m = m+1;
-			glVertex3f(fensterg[m][0]-3, fensterg[m][1]+1, fensterg[m][2]+0.1);
+			glVertex3f(fenstergf[m][0], fenstergf[m][1], fenstergf[m][2]);
 			m = m+1;
-			glVertex3f(fensterg[m][0]+3, fensterg[m][1]+1, fensterg[m][2]+0.1);
+			glVertex3f(fenstergf[m][0], fenstergf[m][1], fenstergf[m][2]);
 		}
 		glNormal3f(0, 0, -1);
 		glColor3f(0.471, 0.776, 0.992);
-		for(m=3; m<6; m++) {
-			glVertex3f(fensterg[m][0], fensterg[m][1]-2, fensterg[m][2]-0.1);
+		for(m=6; m<12; m++) {
+			glVertex3f(fenstergf[m][0], fenstergf[m][1], fenstergf[m][2]);
 			m = m+1;
-			glVertex3f(fensterg[m][0]-3, fensterg[m][1]+1, fensterg[m][2]-0.1);
+			glVertex3f(fenstergf[m][0], fenstergf[m][1], fenstergf[m][2]);
 			m = m+1;
-			glVertex3f(fensterg[m][0]+3, fensterg[m][1]+1, fensterg[m][2]-0.1);
+			glVertex3f(fenstergf[m][0], fenstergf[m][1], fenstergf[m][2]);
 		}
 	glEnd();
 
