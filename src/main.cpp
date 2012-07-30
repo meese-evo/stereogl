@@ -55,6 +55,19 @@ const GLfloat v27[3] = { -26.25, 61.75, -8.75 };
 const GLfloat v28[3] = { -26.25, 70, 0 };
 const GLfloat v29[3] = { 0, 70, 0 };
 
+// Vertexe Haustür
+const GLfloat v30[3] = { -35.1, -35, -9 };
+const GLfloat v31[3] = { -35.1, -8, -9 };
+const GLfloat v32[3] = { -35.1, -8, 9 };
+const GLfloat v33[3] = { -35.1, -35, 9 };
+
+// Vertexe Fenster
+// Fenster links der Tür
+const GLfloat v34[3] = { -35.1, -25, -42 };
+const GLfloat v35[3] = { -35.1, -7, -42 };
+const GLfloat v36[3] = { -35.1, -7, -17 };
+const GLfloat v37[3] = { -35.1, -25, -17 };
+
 struct fVektor {
 	GLfloat x;
 	GLfloat y;
@@ -176,6 +189,11 @@ void DrawCube(int i, int width, int height) {
 		int w;
 		int h;
 	};
+
+	int j;
+	int m;
+
+	float offset[5] = { 0, 58, 0, 0, 0 };
 
 	float giebel = v8[2] - v0[2];
 
@@ -332,7 +350,7 @@ void DrawCube(int i, int width, int height) {
 		glVertex3fv(v28);
 	glEnd();
 
-	// Front und Dach der Gaube zeichnen
+	// Front, Fenster und Dach der Gaube zeichnen
 	glBegin(GL_QUADS);
 		// Frontfläche Giebel - Hellblau
 		glColor3f(0, 1, 1);
@@ -355,6 +373,72 @@ void DrawCube(int i, int width, int height) {
 		glVertex3fv(v29);
 		glVertex3f(v26[0]-5, v26[1]-5, v26[2]-5.5);
 		glVertex3f(v27[0]-5, v27[1]-5, v27[2]-5.5);
+		// Fensterrahmen
+		glColor3f(0.373, 0.114, 0.055);
+		glNormal3f(-1, 0, 0);
+		glVertex3f(v22[0]-0.1, v22[1]+2, v22[2]-2);
+		glVertex3f(v25[0]-0.1, v25[1]+2, v25[2]+2);
+		glVertex3f(v27[0]-0.1, v27[1]-2, v27[2]+2);
+		glVertex3f(v24[0]-0.1, v24[1]-2, v24[2]-2);
+		// Fenster
+		glColor3f(0.471, 0.776, 0.992);
+		glNormal3f(-1, 0, 0);
+		glVertex3f(v22[0]-0.2, v22[1]+2.5, v22[2]-2.5);
+		glVertex3f(v25[0]-0.2, v25[1]+2.5, v25[2]+2.5);
+		glVertex3f(v27[0]-0.2, v27[1]-2.5, v27[2]+2.5);
+		glVertex3f(v24[0]-0.2, v24[1]-2.5, v24[2]-2.5);
+	glEnd();
+
+	// Haustür und Fenster
+	glBegin(GL_QUADS);
+		// Tür
+		glColor3f(0.373, 0.114, 0.055);
+		glNormal3f(-1, 0, 0);
+		glVertex3fv(v30);
+		glVertex3fv(v31);
+		glVertex3fv(v32);
+		glVertex3fv(v33);
+		// Fenster der Haustür
+		glColor3f(0.471, 0.776, 0.992);
+		glNormal3f(-1, 0, 0);
+		glVertex3f(v30[0]-0.1, v30[1]+4, v30[2]+4);
+		glVertex3f(v31[0]-0.1, v31[1]-4, v31[2]+4);
+		glVertex3f(v32[0]-0.1, v32[1]-4, v32[2]-4);
+		glVertex3f(v33[0]-0.1, v33[1]+4, v33[2]-4);
+		//Fenster links und rechts der Tür
+		for(j=0; j<2; j++){
+			//Fensterrahmen
+			glColor3f(0.373, 0.114, 0.055);
+			glNormal3f(-1, 0, 0);
+			glVertex3f(v34[0], v34[1], v34[2]+offset[j]);
+			glVertex3f(v35[0], v35[1], v35[2]+offset[j]);
+			glVertex3f(v36[0], v36[1], v36[2]+offset[j]);
+			glVertex3f(v37[0], v37[1], v37[2]+offset[j]);
+			// Fensterscheibe
+			glColor3f(0.471, 0.776, 0.992);
+			glNormal3f(-1, 0, 0);
+			glVertex3f(v34[0]-0.1, v34[1]+1, v34[2]+offset[j]+1);
+			glVertex3f(v35[0]-0.1, v35[1]-1, v35[2]+offset[j]+1);
+			glVertex3f(v36[0]-0.1, v36[1]-1, v36[2]+offset[j]-1);
+			glVertex3f(v37[0]-0.1, v37[1]+1, v37[2]+offset[j]-1);
+		}
+		//Fenster links und rechts der Tür
+		for(j=2; j<5; j++){
+			//Fensterrahmen
+			glColor3f(0.373, 0.114, 0.055);
+			glNormal3f(-1, 0, 0);
+			glVertex3f(v34[0], v34[1], v34[2]+offset[j]);
+			glVertex3f(v35[0], v35[1], v35[2]+offset[j]);
+			glVertex3f(v36[0], v36[1], v36[2]+offset[j]);
+			glVertex3f(v37[0], v37[1], v37[2]+offset[j]);
+			// Fensterscheibe
+			glColor3f(0.471, 0.776, 0.992);
+			glNormal3f(-1, 0, 0);
+			glVertex3f(v34[0]-0.1, v34[1]+1, v34[2]+offset[j]+1);
+			glVertex3f(v35[0]-0.1, v35[1]-1, v35[2]+offset[j]+1);
+			glVertex3f(v36[0]-0.1, v36[1]-1, v36[2]+offset[j]-1);
+			glVertex3f(v37[0]-0.1, v37[1]+1, v37[2]+offset[j]-1);
+		}
 	glEnd();
 
 
