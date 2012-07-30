@@ -518,13 +518,13 @@ void DrawCube(int i, int width, int height) {
 		//vorne
 		glNormal3f(0, 0, 1);
 		for(m=0; m<16; m++) {
-			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]+1);
+			glVertex3f(fensterv[m][0]+1, fensterv[m][1]+1, fensterv[m][2]+0.1);
 			m = m+1;
-			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]+1);
+			glVertex3f(fensterv[m][0]+1, fensterv[m][1]-1, fensterv[m][2]+0.1);
 			m = m+1;
-			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]-1);
+			glVertex3f(fensterv[m][0]-1, fensterv[m][1]-1, fensterv[m][2]+0.1);
 			m = m+1;
-			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]-1);
+			glVertex3f(fensterv[m][0]-1, fensterv[m][1]+1, fensterv[m][2]+0.1);
 		}
 	glEnd();
 
