@@ -188,8 +188,9 @@ struct fVektor {
 	GLfloat z;
 } normV;
 
-void DrawCube(int i, int width, int height);
+void DrawHouse(int i, int width, int height);
 void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
+void DrawTree(int i, int width, int height);
 
 int main() {
 
@@ -286,7 +287,8 @@ int main() {
 		// i==0 Viewport links
 		// i==1 Viewport rechts
 		for (i = 0; i < 2; i++) {
-			DrawCube(i, width, height);
+//			DrawTree(i, width, height);
+			DrawHouse(i, width, height);
 		}
 		App.Display();
 
@@ -294,8 +296,50 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-// Fkt. zum Zeichnen des Würfels
-void DrawCube(int i, int width, int height) {
+// Fkt. zum Zeichnen der Bäume
+void DrawTree(int i, int width, int height){
+// http://wiki.delphigl.com/index.php/glRotate
+// http://www.codeworx.org/opengl_tut18.php
+
+	//	glTranslatef(v15[1]-3, 20.0, -34);// Center The Cylinder
+	//	glRotatef(90, v15[1]-3, 20.0, -34);
+
+	GLint KUGEL = 40;
+
+	struct Viewport {
+		int x;
+		int y;
+		int w;
+		int h;
+	};
+
+	Viewport view0 = { 0, 0, width / 2 - 1, height - 1 };
+	Viewport view1 = { width / 2, 0, width / 2 - 1, height - 1 };
+
+	if (i == 0) {
+		glViewport(view0.x, view0.y, view0.w, view0.h); // linker Viewport
+	} else if (i == 1) {
+		glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
+	}
+
+	// Kugel
+	GLUquadricObj *sphere;// Storage For Our Quadratic Objects
+	sphere=gluNewQuadric();// Create A Pointer To The Quadric Object
+
+	glNewList(KUGEL, GL_COMPILE);
+		gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
+		gluQuadricTexture(sphere, GL_TRUE);// Create Texture Coords
+		gluSphere(sphere,15,20,20);// Draw Our Cylinder
+		glColor3f(0, 1, 0);
+		glTranslated(-80,20,-40);
+	glEndList();
+
+	glCallList(KUGEL);
+//	glTranslated(+80,-20,+40);
+}
+
+// Fkt. zum Zeichnen des Hauses inkl. Fenster etc.
+void DrawHouse(int i, int width, int height) {
 
 	struct Viewport {
 		int x;
@@ -609,18 +653,6 @@ void DrawCube(int i, int width, int height) {
 			glVertex3f(fensterh[m][0]-1, fensterh[m][1]+1, fensterh[m][2]-0.1);
 		}
 	glEnd();
-
-
-//		// Schornsteinrohr - Zylinder
-//		// http://wiki.delphigl.com/index.php/glRotate
-//		// http://www.codeworx.org/opengl_tut18.php
-//		glTranslatef(v15[1]-3, 20.0, -34);// Center The Cylinder
-//		glRotatef(90, v15[1]-3, 20.0, -34);
-//		GLUquadricObj *quadratic;// Storage For Our Quadratic Objects
-//		quadratic=gluNewQuadric();// Create A Pointer To The Quadric Object ( NEW )
-//		gluQuadricNormals(quadratic, GLU_SMOOTH);// Create Smooth Normals ( NEW )
-//		gluQuadricTexture(quadratic, GL_TRUE);// Create Texture Coords ( NEW )
-//		gluCylinder(quadratic,10.0f,10.0f,50.0f,32,32);// Draw Our Cylinder
 }
 
 // Fkt. aus Markt&Technik "Jetzt lerne ich OpenGL"
