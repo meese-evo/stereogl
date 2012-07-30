@@ -118,6 +118,27 @@ const GLfloat fensterr[24][3] = { {35.1, 7, -42},
 								 {35.1, -7, 42},
 								 {35.1, -25, 42} };
 
+const GLfloat fensterv[16][4] = { {-30, 7, 50.1},
+								  {-30, 25, 50.1},
+								  {-5, 25, 50.1},
+								  {-5, 7, 50.1},
+
+								  {5, 7, 50.1},
+								  {5, 25, 50.1},
+								  {30, 25, 50.1},
+								  {30, 7, 50.1},
+
+								  {-30, -25, 50.1},
+								  {-30, -7, 50.1},
+								  {-5, -7, 50.1},
+								  {-5, -25, 50.1},
+
+								  {5, -25, 50.1},
+								  {5, -7, 50.1},
+								  {30, -7, 50.1},
+								  {30, -25, 50.1},
+};
+
 struct fVektor {
 	GLfloat x;
 	GLfloat y;
@@ -240,8 +261,7 @@ void DrawCube(int i, int width, int height) {
 		int h;
 	};
 
-	int j;
-	int m, n;
+	int m;
 
 	float giebel = v8[2] - v0[2];
 
@@ -466,6 +486,11 @@ void DrawCube(int i, int width, int height) {
 		for(m=0; m<24; m++) {
 				glVertex3f(fensterr[m][0], fensterr[m][1], fensterr[m][2]);
 		}
+		// vorne
+		glNormal3f(0, 0, 1);
+		for(m=0; m<16; m++) {
+				glVertex3f(fensterv[m][0], fensterv[m][1], fensterv[m][2]);
+		}
 		//Fensterscheibe
 		glColor3f(0.471, 0.776, 0.992);
 		// links
@@ -482,6 +507,17 @@ void DrawCube(int i, int width, int height) {
 		// rechts
 		glNormal3f(1, 0, 0);
 		for(m=0; m<24; m++) {
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]+1);
+			m = m+1;
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]+1);
+			m = m+1;
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]-1);
+			m = m+1;
+			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]-1);
+		}
+		//vorne
+		glNormal3f(0, 0, 1);
+		for(m=0; m<16; m++) {
 			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]+1, fensterr[m][2]+1);
 			m = m+1;
 			glVertex3f(fensterr[m][0]+0.1, fensterr[m][1]-1, fensterr[m][2]+1);
