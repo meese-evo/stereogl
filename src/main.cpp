@@ -301,10 +301,10 @@ int main() {
 		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
 		glEnable(GL_NORMALIZE);
-		glLoadIdentity();
-		glTranslatef(0.f, 0.f, -200.f);
-		glRotatef(rotx, 0.f, 1.f, 0.f);
-		glRotatef(roty, 1.f, 0.f, 0.f);
+//		glLoadIdentity();
+//		glTranslatef(0.f, 0.f, -200.f);
+//		glRotatef(rotx, 0.f, 1.f, 0.f);
+//		glRotatef(roty, 1.f, 0.f, 0.f);
 
 		// Seitenwände zeichnen
 		glNewList((GLuint) WAENDE, GL_COMPILE);
@@ -634,7 +634,9 @@ int main() {
 		// http://wiki.delphigl.com/index.php/glRotate
 		// http://www.codeworx.org/opengl_tut18.php
 		GLUquadricObj *sphere;// Storage For Our Quadratic Objects
+		GLUquadricObj *cylinder;
 		sphere=gluNewQuadric();// Create A Pointer To The Quadric Object
+		cylinder=gluNewQuadric();
 
 		glNewList(KUGEL, GL_COMPILE);
 			gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
@@ -645,16 +647,34 @@ int main() {
 			glTranslated(+90,0,+40);
 		glEndList();
 
+		glNewList(ZYLINDER, GL_COMPILE);
+			gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
+			gluQuadricTexture(sphere, GL_TRUE);// Create Texture Coords
+			glTranslated(-90,0,-40);
+			glRotated(90, 1, 0, 0);
+			gluCylinder(cylinder,4,4,35,20,20);// Draw Our Cylinder
+			glColor3f(1, 1, 1);
+		glEndList();
+
 		glNewList((GLint) SZENE, GL_COMPILE);
 			glCallList((GLint) HAUS);
 			glCallList((GLint) KUGEL);
+			glCallList((GLint) ZYLINDER);
 		glEndList();
 
 		for(i=0; i<2; i++){
 			if (i == 0) {
+					glLoadIdentity();
+					glTranslatef(0.f, 0.f, -200.f);
+					glRotatef(rotx, 0.f, 1.f, 0.f);
+					glRotatef(roty, 1.f, 0.f, 0.f);
 					glViewport(view0.x, view0.y, view0.w, view0.h); // linker Viewport
 				}
 			else if (i == 1) {
+					glLoadIdentity();
+					glTranslatef(0.f, 0.f, -200.f);
+					glRotatef(rotx, 0.f, 1.f, 0.f);
+					glRotatef(roty, 1.f, 0.f, 0.f);
 					glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
 				}
 			glCallList((GLint) SZENE);
