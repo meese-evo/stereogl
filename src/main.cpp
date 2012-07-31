@@ -232,18 +232,6 @@ int main() {
 		int h;
 	};
 
-    GLuint Texture = 0;
-    {
-        sf::Image Image;
-        if (!Image.LoadFromFile("giebel.jpg"))
-            return EXIT_FAILURE;
-        glGenTextures(1, &Texture);
-        glBindTexture(GL_TEXTURE_2D, Texture);
-        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    }
-
 	Viewport view0 = { 0, 0, width / 2 - 1, height - 1 };
 	Viewport view1 = { width / 2, 0, width / 2 - 1, height - 1 };
 
@@ -266,6 +254,18 @@ int main() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
+
+    GLuint Texture = 0;
+    {
+        sf::Image Image;
+        if (!Image.LoadFromFile("giebel.jpg"))
+            return EXIT_FAILURE;
+        glGenTextures(1, &Texture);
+        glBindTexture(GL_TEXTURE_2D, Texture);
+        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    }
 
 	// Rotation
 	float rotx = 0;
