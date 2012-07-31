@@ -2,6 +2,7 @@
  * Folgende Libs dem Linker hinzufügen
  * - sfml-system
  * - sfml-window
+ * - sfml-graphics
  * - GLU
  *
  * SFML-Tutorial: http://www.sfml-dev.org/tutorials/1.5/window-opengl.php
@@ -10,7 +11,9 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
+#include <stdio.h>
 #include <math.h>
 
 using namespace std;
@@ -228,6 +231,18 @@ int main() {
 		int w;
 		int h;
 	};
+
+    GLuint Texture = 0;
+    {
+        sf::Image Image;
+        if (!Image.LoadFromFile("giebel.jpg"))
+            return EXIT_FAILURE;
+        glGenTextures(1, &Texture);
+        glBindTexture(GL_TEXTURE_2D, Texture);
+        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    }
 
 	Viewport view0 = { 0, 0, width / 2 - 1, height - 1 };
 	Viewport view1 = { width / 2, 0, width / 2 - 1, height - 1 };
