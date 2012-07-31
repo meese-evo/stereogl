@@ -20,7 +20,7 @@ using namespace std;
 #define SZENE				1 // Gesamte Szene
 // 10-999 Unterlisten
 #define KOORDINATENSYSTEM	10
-#define GRUNDSTUECK			20
+#define RASEN				20
 #define	HAUS				30
 	#define WAENDE			310
 	#define DACH			320
@@ -201,6 +201,11 @@ const GLfloat fenstergf[12][3] = { {-0.5, 63, 50.2},
 								   {0.5, 37.3, -50.2},
 								   {26.3, 37.3, -50.2} };
 
+const GLfloat rasen[4][3] = { {85,-35,-85},
+							  {-85,-35,-85},
+							  {-85,-35,85},
+							  {85,-35,85} };
+
 struct fVektor {
 	GLfloat x;
 	GLfloat y;
@@ -337,13 +342,6 @@ int main() {
 				glVertex3fv(v7);
 				glVertex3fv(v1);
 				glVertex3fv(v0);
-				// Fläche Unten - Lila
-				glColor3f(1, 0, 1);
-				glNormal3f(0, -1, 0);
-				glVertex3fv(v0);
-				glVertex3fv(v6);
-				glVertex3fv(v4);
-				glVertex3fv(v3);
 			glEnd();
 		glEndList();
 
@@ -646,14 +644,14 @@ int main() {
 			glColor3f(0, 1, 0);
 			for(n=0; n<2; n++){
 				if(n==0){
-					glTranslated(-90, 0, -40);
+					glTranslated(-78, 0, -40);
 					gluSphere(sphere,15,40,40);// Kugel zeichnen
-					glTranslated(+90, 0, +40);
+					glTranslated(+78, 0, +40);
 				}
 				else if(n==1){
-					glTranslated(-75, -10, -20);
+					glTranslated(-65, -10, -20);
 					gluSphere(sphere,10,40,40);
-					glTranslated(+75, +10, +20);
+					glTranslated(+65, +10, +20);
 				}
 			}
 		glEndList();
@@ -664,30 +662,42 @@ int main() {
 			glColor3f(0.373, 0.114, 0.055);
 			for(n=0; n<2; n++){
 				if(n==0){
-					glTranslated(-90,0,-40);
+					glTranslated(-78,0,-40);
 					glRotated(90, 1, 0, 0);
-					gluCylinder(cylinder,4,4,30,20,20);// Draw Our Cylinder
+					gluCylinder(cylinder,4,4,35,20,20);// Draw Our Cylinder
 					glRotated(-90, 1, 0, 0);
-					glTranslated(+90, 0, +40);
+					glTranslated(+78, 0, +40);
 				}
 				else if(n==1){
-					glTranslated(-75, -10, -20);
+					glTranslated(-65, -10, -20);
 					glRotated(90, 1, 0, 0);
-					gluCylinder(cylinder,3,3,23,20,20);// Draw Our Cylinder
+					gluCylinder(cylinder,3,3,25,20,20);// Draw Our Cylinder
 					glRotated(-90, 1, 0, 0);
-					glTranslated(+75, +10, +20);
+					glTranslated(+65, +10, +20);
 				}
 			}
 		glEndList();
 
 		glNewList((GLint) BAEUME, GL_COMPILE);
-					glCallList((GLint) KRONE);
-					glCallList((GLint) STAMM);
+			glCallList((GLint) KRONE);
+			glCallList((GLint) STAMM);
+		glEndList();
+
+		glNewList((GLint) RASEN, GL_COMPILE);
+			glBegin(GL_QUADS);
+				glColor3f(0, 1, 0);
+				glNormal3f(0, 1, 0);
+				glVertex3fv(rasen[0]);
+				glVertex3fv(rasen[1]);
+				glVertex3fv(rasen[2]);
+				glVertex3fv(rasen[3]);
+			glEnd();
 		glEndList();
 
 		glNewList((GLint) SZENE, GL_COMPILE);
 			glCallList((GLint) HAUS);
 			glCallList((GLint) BAEUME);
+			glCallList((GLint) RASEN);
 		glEndList();
 
 		for(i=0; i<2; i++){
