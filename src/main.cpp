@@ -255,17 +255,16 @@ int main() {
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 
+	// Bild laden und Mipmap erstellen
     GLuint Texture = 0;
-    {
-        sf::Image Image;
-        if (!Image.LoadFromFile("giebel.jpg"))
-            return EXIT_FAILURE;
-        glGenTextures(1, &Texture);
-        glBindTexture(GL_TEXTURE_2D, Texture);
-        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    }
+	sf::Image Image;
+	if (!Image.LoadFromFile("giebel.jpg"))
+		return EXIT_FAILURE;
+	glGenTextures(1, &Texture);
+	glBindTexture(GL_TEXTURE_2D, Texture);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 	// Rotation
 	float rotx = 0;
