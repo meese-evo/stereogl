@@ -30,9 +30,9 @@ using namespace std;
 	#define GAUBE			360
 	#define HAUSTUER		370
 	#define FENSTER			380
-#define BAUME				40
-	#define KUGEL			410
-	#define ZYLINDER		420
+#define BAEUME				40
+	#define KRONE			410
+	#define STAMM			420
 
 const GLfloat offset = 80;
 
@@ -638,28 +638,56 @@ int main() {
 		sphere=gluNewQuadric();// Create A Pointer To The Quadric Object
 		cylinder=gluNewQuadric();
 
-		glNewList(KUGEL, GL_COMPILE);
+		int n;
+
+		glNewList(KRONE, GL_COMPILE);
 			gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
 			gluQuadricTexture(sphere, GL_TRUE);// Create Texture Coords
-			glTranslated(-90,0,-40);
-			gluSphere(sphere,15,20,20);// Draw Our Cylinder
-			glColor3f(1, 1, 1);
-			glTranslated(+90,0,+40);
+			glColor3f(0, 1, 0);
+			for(n=0; n<2; n++){
+				if(n==0){
+					glTranslated(-90, 0, -40);
+					gluSphere(sphere,15,40,40);// Kugel zeichnen
+					glTranslated(+90, 0, +40);
+				}
+				else if(n==1){
+					glTranslated(-75, -10, -20);
+					gluSphere(sphere,10,40,40);
+					glTranslated(+75, +10, +20);
+				}
+			}
 		glEndList();
 
-		glNewList(ZYLINDER, GL_COMPILE);
+		glNewList(STAMM, GL_COMPILE);
 			gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
 			gluQuadricTexture(sphere, GL_TRUE);// Create Texture Coords
-			glTranslated(-90,0,-40);
-			glRotated(90, 1, 0, 0);
-			gluCylinder(cylinder,4,4,35,20,20);// Draw Our Cylinder
-			glColor3f(1, 1, 1);
+			glColor3f(0.373, 0.114, 0.055);
+			for(n=0; n<2; n++){
+				if(n==0){
+					glTranslated(-90,0,-40);
+					glRotated(90, 1, 0, 0);
+					gluCylinder(cylinder,4,4,30,20,20);// Draw Our Cylinder
+					glRotated(-90, 1, 0, 0);
+					glTranslated(+90, 0, +40);
+				}
+				else if(n==1){
+					glTranslated(-75, -10, -20);
+					glRotated(90, 1, 0, 0);
+					gluCylinder(cylinder,3,3,23,20,20);// Draw Our Cylinder
+					glRotated(-90, 1, 0, 0);
+					glTranslated(+75, +10, +20);
+				}
+			}
+		glEndList();
+
+		glNewList((GLint) BAEUME, GL_COMPILE);
+					glCallList((GLint) KRONE);
+					glCallList((GLint) STAMM);
 		glEndList();
 
 		glNewList((GLint) SZENE, GL_COMPILE);
 			glCallList((GLint) HAUS);
-			glCallList((GLint) KUGEL);
-			glCallList((GLint) ZYLINDER);
+			glCallList((GLint) BAEUME);
 		glEndList();
 
 		for(i=0; i<2; i++){
