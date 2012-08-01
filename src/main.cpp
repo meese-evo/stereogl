@@ -334,61 +334,65 @@ int main() {
 		glLoadIdentity();
 
 		// Seitenwände zeichnen
+		LoadTexture("textures/wall.jpg", &textures.Wand);
 		glNewList((GLuint) WAENDE, GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Wand);
 			glBegin(GL_QUADS);
 				// Fläche Vorderseite - Grün
-				glColor3f(0, 1, 0); // Definition der Farbe
+				glColor3f(1, 1, 1); // Definition der Farbe
 				glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
-				glVertex3fv(v0);
-				glVertex3fv(v1);
-				glVertex3fv(v2);
-				glVertex3fv(v3);
+				glTexCoord2f(0, 0); glVertex3fv(v0);
+				glTexCoord2f(0, 1); glVertex3fv(v1);
+				glTexCoord2f(1, 1); glVertex3fv(v2);
+				glTexCoord2f(1, 0); glVertex3fv(v3);
 				// Fläche Rechts - Rot
-				glColor3f(1, 0, 0);
+				glColor3f(1, 1, 1);
 				glNormal3f(1, 0, 0);
-				glVertex3fv(v4);
-				glVertex3fv(v5);
-				glVertex3fv(v2);
-				glVertex3fv(v3);
+				glTexCoord2f(0, 0); glVertex3fv(v4);
+				glTexCoord2f(0, 1); glVertex3fv(v5);
+				glTexCoord2f(1, 1); glVertex3fv(v2);
+				glTexCoord2f(1, 0); glVertex3fv(v3);
 				// Fläche Rückseite - Blau
-				glColor3f(0, 0, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, -1);
-				glVertex3fv(v6);
-				glVertex3fv(v7);
-				glVertex3fv(v5);
-				glVertex3fv(v4);
+				glTexCoord2f(0, 0); glVertex3fv(v6);
+				glTexCoord2f(0, 1); glVertex3fv(v7);
+				glTexCoord2f(1, 1); glVertex3fv(v5);
+				glTexCoord2f(1, 0); glVertex3fv(v4);
 				// Fläche Links - Hellblau
-				glColor3f(0, 1, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(-1, 0, 0);
-				glVertex3fv(v6);
-				glVertex3fv(v7);
-				glVertex3fv(v1);
-				glVertex3fv(v0);
+				glTexCoord2f(0, 0); glVertex3fv(v6);
+				glTexCoord2f(0, 1); glVertex3fv(v7);
+				glTexCoord2f(1, 1); glVertex3fv(v1);
+				glTexCoord2f(1, 0); glVertex3fv(v0);
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		// Dach zeichnen
 		LoadTexture("textures/roof.jpg", &textures.Dach);
 		glNewList((GLint) DACHFLAECHEN, GL_COMPILE);
-					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, textures.Dach);
-					glBegin(GL_QUADS);
-						// Fläche Dach rechts - Gelb
-						glColor3f(1, 1, 1);
-						glNormal3f(0.706298, 0.707914 , 0);
-						glTexCoord2f(0, 0); glVertex3fv(v8);
-						glTexCoord2f(0, 1); glVertex3fv(v9);
-						glTexCoord2f(1, 1); glVertex3fv(v10);
-						glTexCoord2f(1, 0); glVertex3fv(v11);
-						// Fläche Dach links - Gelb
-						glColor3f(1, 1, 1);
-						glNormal3f(-0.706298, 0.707914 , 0);
-						glTexCoord2f(0, 0); glVertex3fv(v8);
-						glTexCoord2f(0, 1); glVertex3fv(v12);
-						glTexCoord2f(1, 1); glVertex3fv(v13);
-						glTexCoord2f(1, 0); glVertex3fv(v11);
-					glEnd();
-					glDisable(GL_TEXTURE_2D);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Dach);
+			glBegin(GL_QUADS);
+				// Fläche Dach rechts - Gelb
+				glColor3f(1, 1, 1);
+				glNormal3f(0.706298, 0.707914 , 0);
+				glTexCoord2f(0, 0); glVertex3fv(v8);
+				glTexCoord2f(0, 1); glVertex3fv(v9);
+				glTexCoord2f(1, 1); glVertex3fv(v10);
+				glTexCoord2f(1, 0); glVertex3fv(v11);
+				// Fläche Dach links - Gelb
+				glColor3f(1, 1, 1);
+				glNormal3f(-0.706298, 0.707914 , 0);
+				glTexCoord2f(0, 0); glVertex3fv(v8);
+				glTexCoord2f(0, 1); glVertex3fv(v12);
+				glTexCoord2f(1, 1); glVertex3fv(v13);
+				glTexCoord2f(1, 0); glVertex3fv(v11);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		// Dachgiebel zeichnen
