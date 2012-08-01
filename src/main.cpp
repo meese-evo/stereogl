@@ -376,7 +376,7 @@ int main() {
 		glEndList();
 
 		// Dach zeichnen
-		LoadTexture("textures/roof.jpg", &textures.Dach);
+		LoadTexture("textures/roof1.jpg", &textures.Dach);
 		glNewList((GLint) DACHFLAECHEN, GL_COMPILE);
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, textures.Dach);
@@ -385,16 +385,16 @@ int main() {
 				glColor3f(1, 1, 1);
 				glNormal3f(0.706298, 0.707914 , 0);
 				glTexCoord2f(0, 0); glVertex3fv(v8);
-				glTexCoord2f(0, 1); glVertex3fv(v9);
-				glTexCoord2f(1, 1); glVertex3fv(v10);
-				glTexCoord2f(1, 0); glVertex3fv(v11);
+				glTexCoord2f(0, 4); glVertex3fv(v9);
+				glTexCoord2f(4, 4); glVertex3fv(v10);
+				glTexCoord2f(4, 0); glVertex3fv(v11);
 				// Fläche Dach links - Gelb
 				glColor3f(1, 1, 1);
 				glNormal3f(-0.706298, 0.707914 , 0);
 				glTexCoord2f(0, 0); glVertex3fv(v8);
-				glTexCoord2f(0, 1); glVertex3fv(v12);
-				glTexCoord2f(1, 1); glVertex3fv(v13);
-				glTexCoord2f(1, 0); glVertex3fv(v11);
+				glTexCoord2f(0, 4); glVertex3fv(v12);
+				glTexCoord2f(4, 4); glVertex3fv(v13);
+				glTexCoord2f(4, 0); glVertex3fv(v11);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 		glEndList();
@@ -827,6 +827,8 @@ bool LoadTexture(string path, GLuint *pTexName){
 	glBindTexture(GL_TEXTURE_2D, *pTexName);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
