@@ -719,44 +719,54 @@ int main() {
 
 		int n;
 
+		LoadTexture("textures/leaves.jpg", &textures.Blaetter);
 		glNewList(KRONE, GL_COMPILE);
 			gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
 			gluQuadricTexture(sphere, GL_TRUE);// Create Texture Coords
 			glColor3f(0, 1, 0);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Blaetter);
 			for(n=0; n<2; n++){
 				if(n==0){
 					glTranslated(-78, 0, -40);
-					gluSphere(sphere,15,40,40);// Kugel zeichnen
+					gluSphere(sphere,15,80,40);// Kugel zeichnen
 					glTranslated(+78, 0, +40);
 				}
 				else if(n==1){
 					glTranslated(-65, -10, -20);
-					gluSphere(sphere,10,40,40);
+					gluSphere(sphere,10,80,40);
 					glTranslated(+65, +10, +20);
 				}
 			}
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
+		// Texturierung für den Stamm deaktiviert. Führt bei der geringen Auflösung
+		// zu keinem Sichtbarem Ergebnis.
+//		LoadTexture("textures/trunk.jpg", &textures.Stamm);
 		glNewList(STAMM, GL_COMPILE);
 			gluQuadricNormals(sphere, GLU_SMOOTH);// Create Smooth Normals
 			gluQuadricTexture(sphere, GL_TRUE);// Create Texture Coords
 			glColor3f(0.373, 0.114, 0.055);
+//			glEnable(GL_TEXTURE_2D);
+//			glBindTexture(GL_TEXTURE_2D, textures.Stamm);
 			for(n=0; n<2; n++){
 				if(n==0){
 					glTranslated(-78,0,-40);
 					glRotated(90, 1, 0, 0);
-					gluCylinder(cylinder,4,4,35,20,20);// Draw Our Cylinder
+					gluCylinder(cylinder,4,4,35,20,40);// Draw Our Cylinder
 					glRotated(-90, 1, 0, 0);
 					glTranslated(+78, 0, +40);
 				}
 				else if(n==1){
 					glTranslated(-65, -10, -20);
 					glRotated(90, 1, 0, 0);
-					gluCylinder(cylinder,3,3,25,20,20);// Draw Our Cylinder
+					gluCylinder(cylinder,3,3,25,20,40);// Draw Our Cylinder
 					glRotated(-90, 1, 0, 0);
 					glTranslated(+65, +10, +20);
 				}
 			}
+//			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		glNewList((GLint) BAEUME, GL_COMPILE);
@@ -809,6 +819,13 @@ int main() {
 	}
 	// Texturen löschen
 	glDeleteTextures(1, &textures.Giebel);
+	glDeleteTextures(1, &textures.GGiebel);
+	glDeleteTextures(1, &textures.Gras);
+	glDeleteTextures(1, &textures.Blaetter);
+	glDeleteTextures(1, &textures.Dach);
+	glDeleteTextures(1, &textures.Stamm);
+	glDeleteTextures(1, &textures.Wand);
+	glDeleteTextures(1, &textures.Schornstein);
 	return EXIT_SUCCESS;
 }
 
