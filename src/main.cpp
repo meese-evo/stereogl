@@ -32,6 +32,7 @@ using namespace std;
 	#define GAUBE			360
 	#define HAUSTUER		370
 	#define FENSTER			380
+	#define DREMPEL			390
 #define BAEUME				40
 	#define KRONE			410
 	#define STAMM			420
@@ -208,13 +209,15 @@ const GLfloat rasen[4][3] = { {85,-35,-85},
 							  {-85,-35,85},
 							  {85,-35,85} };
 
-const GLfloat drempel[8][3] = { {-0.5, 63, 50.2},
-								{-0.5, 37.3, 50.2},
-								{-26.3, 37.3, 50.2},
+const GLfloat drempel[8][4] = { {-35, 26.3, 50},
+								{-43.8, 26.3, 50},
+								{-43.8, 26.3, -50},
+								{-35, 26.3, -50},
 
-								{0.5, 63, 50.2},
-								{0.5, 37.3, 50.2},
-								{26.3, 37.3, 50.2} };
+								{35, 26.3, 50},
+								{43.8, 26.3, 50},
+								{43.8, 26.3, -50},
+								{35, 26.3, -50} };
 
 struct fVektor {
 	GLfloat x;
@@ -222,6 +225,7 @@ struct fVektor {
 	GLfloat z;
 } normV;
 
+bool LoadTexture(string path, GLuint *pTexName);
 void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
 
 int main() {
@@ -241,6 +245,17 @@ int main() {
 
 	Viewport view0 = { 0, 0, width / 2 - 1, height - 1 };
 	Viewport view1 = { width / 2, 0, width / 2 - 1, height - 1 };
+
+	struct tex {
+		GLuint Giebel;
+		GLuint Gras;
+		GLuint Blaetter;
+		GLuint Dach;
+		GLuint Stamm;
+		GLuint Wand;
+	};
+
+	tex textures = { 0, 0, 0, 0, 0, 0 };
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
@@ -266,7 +281,13 @@ int main() {
 	float rotx = 0;
 	float roty = 0;
 
-	GLfloat giebel = v8[2] - v0[2];
+	GLfloat ogiebel = v8[2] - v0[2];
+
+	glEnable(GL_COLOR_MATERIAL); //Materialfarbgebungsart
+	glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
+	glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
+	glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
+	glEnable(GL_NORMALIZE);
 
 	while (App.IsOpened()) {
 
@@ -309,29 +330,8 @@ int main() {
 		}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		glMatrixMode(GL_MODELVIEW);
-		glEnable(GL_COLOR_MATERIAL); //Materialfarbgebungsart
-		glEnable(GL_LIGHT0); //Lichtquelle 0 EIN
-		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
-		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
-		glEnable(GL_NORMALIZE);
-		glEnable(GL_TEXTURE_2D);
 		glLoadIdentity();
-//		glTranslatef(0.f, 0.f, -200.f);
-//		glRotatef(rotx, 0.f, 1.f, 0.f);
-//		glRotatef(roty, 1.f, 0.f, 0.f);
-
-		// Bilder laden und Mipmap erstellen
-	    GLuint Texture = 0;
-		sf::Image Image;
-		if (!Image.LoadFromFile("textures/roof.jpg"))
-			return EXIT_FAILURE;
-		glGenTextures(1, &Texture);
-		glBindTexture(GL_TEXTURE_2D, Texture);
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 		// Seitenwände zeichnen
 		glNewList((GLuint) WAENDE, GL_COMPILE);
@@ -368,7 +368,10 @@ int main() {
 		glEndList();
 
 		// Dach zeichnen
+		LoadTexture("textures/roof.jpg", &textures.Dach);
 		glNewList((GLint) DACHFLAECHEN, GL_COMPILE);
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, textures.Dach);
 					glBegin(GL_QUADS);
 						// Fläche Dach rechts - Gelb
 						glColor3f(1, 1, 1);
@@ -385,23 +388,24 @@ int main() {
 						glTexCoord2f(1, 1); glVertex3fv(v13);
 						glTexCoord2f(1, 0); glVertex3fv(v11);
 					glEnd();
+					glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		// Dachgiebel zeichnen
 		glNewList((GLuint) DACHGIEBEL, GL_COMPILE);
 			glBegin(GL_TRIANGLES);
 				// Fläche Vorderseite - Grün
-				glColor3f(0, 1, 0);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, 1);
-				glVertex3f(v12[0], v12[1], v12[2]-giebel);
-				glVertex3f(v9[0], v9[1], v9[2]-giebel);
-				glVertex3f(v8[0], v8[1], v8[2]-giebel);
+				glVertex3f(v12[0], v12[1], v12[2]-ogiebel);
+				glVertex3f(v9[0], v9[1], v9[2]-ogiebel);
+				glVertex3f(v8[0], v8[1], v8[2]-ogiebel);
 				// Fläche Rückseite - Blau
 				glColor3f(0, 0, 1);
 				glNormal3f(0, 0, -1);
-				glVertex3f(v13[0], v13[1], v13[2]+giebel);
-				glVertex3f(v10[0], v10[1], v10[2]+giebel);
-				glVertex3f(v11[0], v11[1], v11[2]+giebel);
+				glVertex3f(v13[0], v13[1], v13[2]+ogiebel);
+				glVertex3f(v10[0], v10[1], v10[2]+ogiebel);
+				glVertex3f(v11[0], v11[1], v11[2]+ogiebel);
 				// Fensterrahmen vorne
 				glColor3f(0.373, 0.114, 0.055);
 				glNormal3f(0, 0, 1);
@@ -640,6 +644,23 @@ int main() {
 			glEnd();
 		glEndList();
 
+		glNewList((GLint) DREMPEL, GL_COMPILE);
+			glBegin(GL_QUADS);
+				glColor3f(1, 0, 1);
+				glNormal3f(0, -1, 0);
+				for(m=0; m<8; m++) {
+					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					m = m+1;
+					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					m = m+1;
+					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					m = m+1;
+					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+				}
+			glEnd();
+		glEndList();
+
+
 		glNewList((GLint) HAUS, GL_COMPILE);
 				glCallList((GLint) WAENDE);
 				glCallList((GLint) DACHFLAECHEN);
@@ -648,6 +669,7 @@ int main() {
 				glCallList((GLint) GAUBE);
 				glCallList((GLint) HAUSTUER);
 				glCallList((GLint) FENSTER);
+				glCallList((GLint) DREMPEL);
 		glEndList();
 
 		// Kugel
@@ -743,7 +765,30 @@ int main() {
 		App.Display();
 
 	}
+	// Texturen löschen
+	glDeleteTextures(1, &textures.Giebel);
 	return EXIT_SUCCESS;
+}
+
+// Bilder laden und Mipmap erstellen
+bool LoadTexture(string path, GLuint *pTexName){
+
+	sf::Image Image;
+
+	if (!Image.LoadFromFile(path))
+		return EXIT_FAILURE;
+
+	if(!*pTexName)
+		glGenTextures(1, pTexName);
+	else return false;
+
+	glBindTexture(GL_TEXTURE_2D, *pTexName);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return true;
 }
 
 // Fkt. aus Markt&Technik "Jetzt lerne ich OpenGL"
