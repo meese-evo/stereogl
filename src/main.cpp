@@ -253,9 +253,10 @@ int main() {
 		GLuint Dach;
 		GLuint Stamm;
 		GLuint Wand;
+		GLuint Schornstein;
 	};
 
-	tex textures = { 0, 0, 0, 0, 0, 0 };
+	tex textures = { 0, 0, 0, 0, 0, 0, 0 };
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
@@ -396,20 +397,27 @@ int main() {
 		glEndList();
 
 		// Dachgiebel zeichnen
+		LoadTexture("textures/giebel1.jpg", &textures.Giebel);
 		glNewList((GLuint) DACHGIEBEL, GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Giebel);
 			glBegin(GL_TRIANGLES);
 				// Fläche Vorderseite - Grün
 				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, 1);
-				glVertex3f(v12[0], v12[1], v12[2]-ogiebel);
-				glVertex3f(v9[0], v9[1], v9[2]-ogiebel);
-				glVertex3f(v8[0], v8[1], v8[2]-ogiebel);
+				glTexCoord2f(0, 0); glVertex3f(v12[0], v12[1], v12[2]-ogiebel);
+				glTexCoord2f(1, 0); glVertex3f(v9[0], v9[1], v9[2]-ogiebel);
+				glTexCoord2f(0.5, 1); glVertex3f(v8[0], v8[1], v8[2]-ogiebel);
 				// Fläche Rückseite - Blau
-				glColor3f(0, 0, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, -1);
-				glVertex3f(v13[0], v13[1], v13[2]+ogiebel);
-				glVertex3f(v10[0], v10[1], v10[2]+ogiebel);
-				glVertex3f(v11[0], v11[1], v11[2]+ogiebel);
+				glTexCoord2f(0, 0); glVertex3f(v13[0], v13[1], v13[2]+ogiebel);
+				glTexCoord2f(1, 0); glVertex3f(v10[0], v10[1], v10[2]+ogiebel);
+				glTexCoord2f(0.5, 1); glVertex3f(v11[0], v11[1], v11[2]+ogiebel);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+
+			glBegin(GL_TRIANGLES);
 				// Fensterrahmen vorne
 				glColor3f(0.373, 0.114, 0.055);
 				glNormal3f(0, 0, 1);
@@ -444,51 +452,48 @@ int main() {
 		glEndList();
 
 		// Schornstein
+		LoadTexture("textures/chimney.jpg", &textures.Schornstein);
 		glNewList((GLint) SCHORNSTEIN, GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Schornstein);
 			glBegin(GL_QUADS);
 				// Fläche Vorderseite - Grün
-				glColor3f(0, 1, 0); // Definition der Farbe
+				glColor3f(1, 1, 1); // Definition der Farbe
 				glNormal3f(0, 0, 1); // Normalenvektor für die Beleuchtung
-				glVertex3fv(v14);
-				glVertex3fv(v15);
-				glVertex3fv(v16);
-				glVertex3fv(v17);
+				glTexCoord2f(0, 0); glVertex3fv(v14);
+				glTexCoord2f(0, 1); glVertex3fv(v15);
+				glTexCoord2f(1, 1); glVertex3fv(v16);
+				glTexCoord2f(1, 0); glVertex3fv(v17);
 				// Fläche Rechts - Rot
-				glColor3f(1, 0, 0);
+				glColor3f(1, 1, 1);
 				glNormal3f(1, 0, 0);
-				glVertex3fv(v18);
-				glVertex3fv(v19);
-				glVertex3fv(v16);
-				glVertex3fv(v17);
+				glTexCoord2f(0, 0); glVertex3fv(v18);
+				glTexCoord2f(0, 1); glVertex3fv(v19);
+				glTexCoord2f(1, 1); glVertex3fv(v16);
+				glTexCoord2f(1, 0); glVertex3fv(v17);
 				// Fläche Rückseite - Blau
-				glColor3f(0, 0, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, -1);
-				glVertex3fv(v20);
-				glVertex3fv(v21);
-				glVertex3fv(v19);
-				glVertex3fv(v18);
+				glTexCoord2f(0, 0); glVertex3fv(v20);
+				glTexCoord2f(0, 1); glVertex3fv(v21);
+				glTexCoord2f(1, 1); glVertex3fv(v19);
+				glTexCoord2f(1, 0); glVertex3fv(v18);
 				// Fläche Links - Hellblau
-				glColor3f(0, 1, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(-1, 0, 0);
-				glVertex3fv(v20);
-				glVertex3fv(v21);
-				glVertex3fv(v15);
-				glVertex3fv(v14);
-				// Fläche Unten - Lila
-				glColor3f(1, 0, 1);
-				glNormal3f(0, -1, 0);
-				glVertex3fv(v14);
-				glVertex3fv(v20);
-				glVertex3fv(v18);
-				glVertex3fv(v17);
+				glTexCoord2f(0, 0); glVertex3fv(v20);
+				glTexCoord2f(0, 1); glVertex3fv(v21);
+				glTexCoord2f(1, 1); glVertex3fv(v15);
+				glTexCoord2f(1, 0); glVertex3fv(v14);
 				// Fläche Oben - Gelb
-				glColor3f(1, 1, 0);
+				glColor3f(0, 0, 0);
 				glNormal3f(0, 1, 0);
-				glVertex3f(v15[0], v15[1]-3, v15[2]);
-				glVertex3f(v21[0], v21[1]-3, v21[2]);
-				glVertex3f(v19[0], v19[1]-3, v19[2]);
-				glVertex3f(v16[0], v16[1]-3, v16[2]);
+				glTexCoord2f(0, 0); glVertex3f(v15[0], v15[1]-3, v15[2]);
+				glTexCoord2f(0, 1); glVertex3f(v21[0], v21[1]-3, v21[2]);
+				glTexCoord2f(1, 1); glVertex3f(v19[0], v19[1]-3, v19[2]);
+				glTexCoord2f(1, 0); glVertex3f(v16[0], v16[1]-3, v16[2]);
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		// Gaube
