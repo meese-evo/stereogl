@@ -322,7 +322,7 @@ int main() {
 //		glRotatef(rotx, 0.f, 1.f, 0.f);
 //		glRotatef(roty, 1.f, 0.f, 0.f);
 
-		// Bild laden und Mipmap erstellen
+		// Bilder laden und Mipmap erstellen
 	    GLuint Texture = 0;
 		sf::Image Image;
 		if (!Image.LoadFromFile("textures/roof.jpg"))
