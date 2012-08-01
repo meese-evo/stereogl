@@ -29,13 +29,15 @@ using namespace std;
 	#define DACHGIEBEL		330
 	#define	DACHFLAECHEN	340 // Ziegelflächen
 	#define SCHORNSTEIN		350
-	#define GAUBE			360
-	#define HAUSTUER		370
-	#define FENSTER			380
-	#define DREMPEL			390
+	#define HAUSTUER		360
+	#define FENSTER			370
+	#define DREMPEL			380
 #define BAEUME				40
 	#define KRONE			410
 	#define STAMM			420
+#define GAUBE				50
+	#define GWAENDE			510
+	#define GDACH			520
 
 const GLfloat offset = 80;
 
@@ -496,9 +498,8 @@ int main() {
 			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
-		// Gaube
-		glNewList((GLint) GAUBE, GL_COMPILE);
-			// Seitenwände, Giebel der Gaube zeichnen
+		glNewList((GLint) GWAENDE,GL_COMPILE);
+		// Seitenwände, Giebel der Gaube zeichnen
 			glBegin(GL_TRIANGLES);
 				// Fläche Vorderseite - Grün
 				glColor3f(0, 1, 0);
@@ -519,7 +520,7 @@ int main() {
 				glVertex3fv(v24);
 				glVertex3fv(v28);
 			glEnd();
-			// Front, Fenster und Dach der Gaube zeichnen
+
 			glBegin(GL_QUADS);
 				// Frontfläche Giebel - Hellblau
 				glColor3f(0, 1, 1);
@@ -528,6 +529,11 @@ int main() {
 				glVertex3fv(v24);
 				glVertex3fv(v27);
 				glVertex3fv(v25);
+			glEnd();
+		glEndList();
+
+		glNewList((GLint) GDACH, GL_COMPILE);
+			glBegin(GL_QUADS);
 				// Fläche Dach rechts - Gelb
 				glColor3f(1, 1, 0);
 				glNormal3f(0.706298, 0.707914 , 0);
@@ -542,21 +548,13 @@ int main() {
 				glVertex3fv(v29);
 				glVertex3f(v26[0]-5, v26[1]-5, v26[2]-5.5);
 				glVertex3f(v27[0]-5, v27[1]-5, v27[2]-5.5);
-				// Fensterrahmen
-				glColor3f(0.373, 0.114, 0.055);
-				glNormal3f(-1, 0, 0);
-				glVertex3f(v22[0]-0.1, v22[1]+2, v22[2]-2);
-				glVertex3f(v25[0]-0.1, v25[1]+2, v25[2]+2);
-				glVertex3f(v27[0]-0.1, v27[1]-2, v27[2]+2);
-				glVertex3f(v24[0]-0.1, v24[1]-2, v24[2]-2);
-				// Fenster
-				glColor3f(0.471, 0.776, 0.992);
-				glNormal3f(-1, 0, 0);
-				glVertex3f(v22[0]-0.2, v22[1]+2.5, v22[2]-2.5);
-				glVertex3f(v25[0]-0.2, v25[1]+2.5, v25[2]+2.5);
-				glVertex3f(v27[0]-0.2, v27[1]-2.5, v27[2]+2.5);
-				glVertex3f(v24[0]-0.2, v24[1]-2.5, v24[2]-2.5);
 			glEnd();
+		glEndList();
+
+		// Gaube
+		glNewList((GLint) GAUBE, GL_COMPILE);
+			glCallList((GLint) GWAENDE);
+			glCallList((GLint) GDACH);
 		glEndList();
 
 		// Haustür mit Fenster
@@ -604,6 +602,13 @@ int main() {
 				for(m=0; m<16; m++) {
 						glVertex3f(fensterh[m][0], fensterh[m][1], fensterh[m][2]);
 				}
+				// Fensterrahmen Giebel
+				glNormal3f(-1, 0, 0);
+				glVertex3f(v22[0]-0.1, v22[1]+2, v22[2]-2);
+				glVertex3f(v25[0]-0.1, v25[1]+2, v25[2]+2);
+				glVertex3f(v27[0]-0.1, v27[1]-2, v27[2]+2);
+				glVertex3f(v24[0]-0.1, v24[1]-2, v24[2]-2);
+
 				//Fensterscheiben
 				glColor3f(0.471, 0.776, 0.992);
 				// links
@@ -650,6 +655,14 @@ int main() {
 					m = m+1;
 					glVertex3f(fensterh[m][0]-1, fensterh[m][1]+1, fensterh[m][2]-0.1);
 				}
+
+				// Fenster
+				glNormal3f(-1, 0, 0);
+				glVertex3f(v22[0]-0.2, v22[1]+2.5, v22[2]-2.5);
+				glVertex3f(v25[0]-0.2, v25[1]+2.5, v25[2]+2.5);
+				glVertex3f(v27[0]-0.2, v27[1]-2.5, v27[2]+2.5);
+				glVertex3f(v24[0]-0.2, v24[1]-2.5, v24[2]-2.5);
+
 			glEnd();
 		glEndList();
 
