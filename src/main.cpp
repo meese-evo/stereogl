@@ -250,6 +250,7 @@ int main() {
 
 	struct tex {
 		GLuint Giebel;
+		GLuint GGiebel;
 		GLuint Gras;
 		GLuint Blaetter;
 		GLuint Dach;
@@ -258,7 +259,7 @@ int main() {
 		GLuint Schornstein;
 	};
 
-	tex textures = { 0, 0, 0, 0, 0, 0, 0 };
+	tex textures = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24; // Request a 24 bits depth buffer
@@ -498,57 +499,68 @@ int main() {
 			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
-		glNewList((GLint) GWAENDE,GL_COMPILE);
 		// Seitenwände, Giebel der Gaube zeichnen
+		LoadTexture("textures/giebel2.jpg", &textures.GGiebel);
+		glNewList((GLint) GWAENDE,GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.GGiebel);
 			glBegin(GL_TRIANGLES);
 				// Fläche Vorderseite - Grün
-				glColor3f(0, 1, 0);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, 1);
-				glVertex3fv(v22);
-				glVertex3fv(v23);
-				glVertex3fv(v24);
+				glTexCoord2f(0, 0); glVertex3fv(v22);
+				glTexCoord2f(0, 1); glVertex3fv(v24);
+				glTexCoord2f(1, 1); glVertex3fv(v23);
 				// Fläche Rückseite - Blau
-				glColor3f(0, 0, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, 0, -1);
-				glVertex3fv(v25);
-				glVertex3fv(v26);
-				glVertex3fv(v27);
+				glTexCoord2f(1, 0); glVertex3fv(v25);
+				glTexCoord2f(1, 1); glVertex3fv(v27);
+				glTexCoord2f(0, 1); glVertex3fv(v26);
 				// Giebel - Hellblau
-				glColor3f(0, 1, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(-1, 0, 0);
-				glVertex3fv(v27);
-				glVertex3fv(v24);
-				glVertex3fv(v28);
+				glTexCoord2f(0, 0); glVertex3fv(v27);
+				glTexCoord2f(1, 0); glVertex3fv(v24);
+				glTexCoord2f(0.5, 1); glVertex3fv(v28);
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 
+			glEnable(GL_TEXTURE_2D);
 			glBegin(GL_QUADS);
 				// Frontfläche Giebel - Hellblau
-				glColor3f(0, 1, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(-1, 0, 0);
-				glVertex3fv(v22);
-				glVertex3fv(v24);
-				glVertex3fv(v27);
-				glVertex3fv(v25);
+				glTexCoord2f(0, 0); glVertex3fv(v22);
+				glTexCoord2f(0, 1); glVertex3fv(v24);
+				glTexCoord2f(1, 1); glVertex3fv(v27);
+				glTexCoord2f(1, 0); glVertex3fv(v25);
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
+		// Dach der Gaube zeichnen
+		LoadTexture("textures/roof.jpg", &textures.Dach);
 		glNewList((GLint) GDACH, GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Dach);
 			glBegin(GL_QUADS);
 				// Fläche Dach rechts - Gelb
-				glColor3f(1, 1, 0);
+				glColor3f(1, 1, 1);
 				glNormal3f(0.706298, 0.707914 , 0);
-				glVertex3f(v28[0]-5, v28[1], v28[2]);
-				glVertex3fv(v29);
-				glVertex3f(v23[0]-5, v23[1]-5, v23[2]+5.5);
-				glVertex3f(v24[0]-5, v24[1]-5, v24[2]+5.5);
+				glTexCoord2f(0, 0); glVertex3f(v28[0]-5, v28[1], v28[2]);
+				glTexCoord2f(0, 1); glVertex3fv(v29);
+				glTexCoord2f(1, 1); glVertex3f(v23[0]-5, v23[1]-5, v23[2]+5.5);
+				glTexCoord2f(1, 0); glVertex3f(v24[0]-5, v24[1]-5, v24[2]+5.5);
 				// Fläche Dach links - Gelb
-				glColor3f(1, 1, 0);
+				glColor3f(1, 1, 1);
 				glNormal3f(-0.706298, 0.707914 , 0);
-				glVertex3f(v28[0]-5, v28[1], v28[2]);
-				glVertex3fv(v29);
-				glVertex3f(v26[0]-5, v26[1]-5, v26[2]-5.5);
-				glVertex3f(v27[0]-5, v27[1]-5, v27[2]-5.5);
+				glTexCoord2f(0, 0); glVertex3f(v28[0]-5, v28[1], v28[2]);
+				glTexCoord2f(0, 1); glVertex3fv(v29);
+				glTexCoord2f(1, 1); glVertex3f(v26[0]-5, v26[1]-5, v26[2]-5.5);
+				glTexCoord2f(1, 0); glVertex3f(v27[0]-5, v27[1]-5, v27[2]-5.5);
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		// Gaube
@@ -655,31 +667,34 @@ int main() {
 					m = m+1;
 					glVertex3f(fensterh[m][0]-1, fensterh[m][1]+1, fensterh[m][2]-0.1);
 				}
-
 				// Fenster
 				glNormal3f(-1, 0, 0);
 				glVertex3f(v22[0]-0.2, v22[1]+2.5, v22[2]-2.5);
 				glVertex3f(v25[0]-0.2, v25[1]+2.5, v25[2]+2.5);
 				glVertex3f(v27[0]-0.2, v27[1]-2.5, v27[2]+2.5);
 				glVertex3f(v24[0]-0.2, v24[1]-2.5, v24[2]-2.5);
-
 			glEnd();
 		glEndList();
 
+		// Drempel zeichnen
+		LoadTexture("textures/giebel2.jpg", &textures.GGiebel);
 		glNewList((GLint) DREMPEL, GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.GGiebel);
 			glBegin(GL_QUADS);
-				glColor3f(1, 0, 1);
+				glColor3f(1, 1, 1);
 				glNormal3f(0, -1, 0);
 				for(m=0; m<8; m++) {
-					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					glTexCoord2f(0, 0); glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
 					m = m+1;
-					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					glTexCoord2f(0, 1); glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
 					m = m+1;
-					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					glTexCoord2f(1, 1); glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
 					m = m+1;
-					glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
+					glTexCoord2f(1, 0); glVertex3f(drempel[m][0], drempel[m][1], drempel[m][2]);
 				}
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 
@@ -749,15 +764,20 @@ int main() {
 			glCallList((GLint) STAMM);
 		glEndList();
 
+		// Rasen auf dem "Grundstück" zeichnen
+		LoadTexture("textures/grass.jpg", &textures.Gras);
 		glNewList((GLint) RASEN, GL_COMPILE);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textures.Gras);
 			glBegin(GL_QUADS);
 				glColor3f(0, 1, 0);
 				glNormal3f(0, 1, 0);
-				glVertex3fv(rasen[0]);
-				glVertex3fv(rasen[1]);
-				glVertex3fv(rasen[2]);
-				glVertex3fv(rasen[3]);
+				glTexCoord2f(1, 1); glVertex3fv(rasen[0]);
+				glTexCoord2f(0, 1); glVertex3fv(rasen[1]);
+				glTexCoord2f(0, 0); glVertex3fv(rasen[2]);
+				glTexCoord2f(1, 0); glVertex3fv(rasen[3]);
 			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glEndList();
 
 		glNewList((GLint) SZENE, GL_COMPILE);
