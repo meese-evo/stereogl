@@ -3,7 +3,6 @@
  * - sfml-system
  * - sfml-window
  * - sfml-graphics
- * - GLU
  *
  * SFML-Tutorial: http://www.sfml-dev.org/tutorials/1.5/window-opengl.php
  *
@@ -41,13 +40,13 @@ const GLfloat offset = 80;
 
 // Vertexe des "Ur"-Würfels
 const GLfloat v0[3] = { -35, -35, 50 };
-const GLfloat v1[3] = { -35, 35, 50 };
-const GLfloat v2[3] = { 35, 35, 50 };
+const GLfloat v1[3] = { -35, 26.3, 50 };
+const GLfloat v2[3] = { 35, 26.3, 50 };
 const GLfloat v3[3] = { 35, -35, 50 };
 const GLfloat v4[3] = { 35, -35, -50 };
-const GLfloat v5[3] = { 35, 35, -50 };
+const GLfloat v5[3] = { 35, 26.3, -50 };
 const GLfloat v6[3] = { -35, -35, -50 };
-const GLfloat v7[3] = { -35, 35, -50 };
+const GLfloat v7[3] = { -35, 26.3, -50 };
 
 // Vertexe des Daches
 const GLfloat v8[3] = { 0, 70, 60 };
@@ -209,6 +208,14 @@ const GLfloat rasen[4][3] = { {85,-35,-85},
 							  {-85,-35,85},
 							  {85,-35,85} };
 
+const GLfloat drempel[8][3] = { {-0.5, 63, 50.2},
+								{-0.5, 37.3, 50.2},
+								{-26.3, 37.3, 50.2},
+
+								{0.5, 63, 50.2},
+								{0.5, 37.3, 50.2},
+								{26.3, 37.3, 50.2} };
+
 struct fVektor {
 	GLfloat x;
 	GLfloat y;
@@ -254,17 +261,6 @@ int main() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
-
-	// Bild laden und Mipmap erstellen
-    GLuint Texture = 0;
-	sf::Image Image;
-	if (!Image.LoadFromFile("giebel.jpg"))
-		return EXIT_FAILURE;
-	glGenTextures(1, &Texture);
-	glBindTexture(GL_TEXTURE_2D, Texture);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 	// Rotation
 	float rotx = 0;
@@ -320,10 +316,22 @@ int main() {
 		glEnable(GL_LIGHTING); //OpenGL-Lichteffekte EIN
 		glDisable(GL_CULL_FACE); //Seiten nicht ausblenden
 		glEnable(GL_NORMALIZE);
-//		glLoadIdentity();
+		glEnable(GL_TEXTURE_2D);
+		glLoadIdentity();
 //		glTranslatef(0.f, 0.f, -200.f);
 //		glRotatef(rotx, 0.f, 1.f, 0.f);
 //		glRotatef(roty, 1.f, 0.f, 0.f);
+
+		// Bild laden und Mipmap erstellen
+	    GLuint Texture = 0;
+		sf::Image Image;
+		if (!Image.LoadFromFile("textures/roof.jpg"))
+			return EXIT_FAILURE;
+		glGenTextures(1, &Texture);
+		glBindTexture(GL_TEXTURE_2D, Texture);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, Image.GetWidth(), Image.GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, Image.GetPixelsPtr());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 		// Seitenwände zeichnen
 		glNewList((GLuint) WAENDE, GL_COMPILE);
@@ -363,19 +371,19 @@ int main() {
 		glNewList((GLint) DACHFLAECHEN, GL_COMPILE);
 					glBegin(GL_QUADS);
 						// Fläche Dach rechts - Gelb
-						glColor3f(1, 1, 0);
+						glColor3f(1, 1, 1);
 						glNormal3f(0.706298, 0.707914 , 0);
-						glVertex3fv(v8);
-						glVertex3fv(v9);
-						glVertex3fv(v10);
-						glVertex3fv(v11);
+						glTexCoord2f(0, 0); glVertex3fv(v8);
+						glTexCoord2f(0, 1); glVertex3fv(v9);
+						glTexCoord2f(1, 1); glVertex3fv(v10);
+						glTexCoord2f(1, 0); glVertex3fv(v11);
 						// Fläche Dach links - Gelb
-						glColor3f(1, 1, 0);
+						glColor3f(1, 1, 1);
 						glNormal3f(-0.706298, 0.707914 , 0);
-						glVertex3fv(v8);
-						glVertex3fv(v12);
-						glVertex3fv(v13);
-						glVertex3fv(v11);
+						glTexCoord2f(0, 0); glVertex3fv(v8);
+						glTexCoord2f(0, 1); glVertex3fv(v12);
+						glTexCoord2f(1, 1); glVertex3fv(v13);
+						glTexCoord2f(1, 0); glVertex3fv(v11);
 					glEnd();
 		glEndList();
 
