@@ -232,8 +232,8 @@ void CalcNormal(GLfloat V1[], GLfloat V2[], GLfloat V3[]);
 
 int main() {
 
-	const int width = 1600;
-	const int height = 800;
+	const int width = 1200;
+	const int height = 600;
 
 	int i = 0;
 	int m;
