@@ -284,7 +284,7 @@ int main() {
 	// Rotation
 	float rotx = 0;
 	float roty = 0;
-	float stereo = 2; // Offset für den Stereoview des rechten Viewports
+	float stereo = 3; // Offset für den Stereoview des rechten Viewports
 	float zoom = 1.25;
 
 	GLfloat ogiebel = v8[2] - v0[2];
@@ -312,16 +312,16 @@ int main() {
 					App.Close();
 				// Rotation Left
 				if (Event.Key.Code == sf::Key::Left)
-					rotx -= 5;
+					rotx -= 2;
 				//Rotation Right
 				if (Event.Key.Code == sf::Key::Right)
-					rotx += 5;
+					rotx += 2;
 				//Rotation Up
 				if (Event.Key.Code == sf::Key::Up)
-					roty -= 5;
+					roty -= 2;
 				//Rotation Down
 				if (Event.Key.Code == sf::Key::Down)
-					roty += 5;
+					roty += 2;
 				//Rotation Up
 				if (Event.Key.Code == sf::Key::A)
 					stereo += 1;
@@ -330,7 +330,7 @@ int main() {
 					stereo -= 1;
 				//Reset des Stereoview
 				if (Event.Key.Code == sf::Key::R)
-					stereo = 10;
+					stereo = 3;
 				//Rotation Down
 				if (Event.Key.Code == sf::Key::Z)
 					zoom += 0.01;
