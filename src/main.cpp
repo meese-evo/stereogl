@@ -284,6 +284,8 @@ int main() {
 	// Rotation
 	float rotx = 0;
 	float roty = 0;
+	float stereo = 2; // Offset für den Stereoview des rechten Viewports
+	float zoom = 1.25;
 
 	GLfloat ogiebel = v8[2] - v0[2];
 
@@ -320,6 +322,21 @@ int main() {
 				//Rotation Down
 				if (Event.Key.Code == sf::Key::Down)
 					roty += 5;
+				//Rotation Up
+				if (Event.Key.Code == sf::Key::A)
+					stereo += 1;
+				//Rotation Down
+				if (Event.Key.Code == sf::Key::D)
+					stereo -= 1;
+				//Reset des Stereoview
+				if (Event.Key.Code == sf::Key::R)
+					stereo = 10;
+				//Rotation Down
+				if (Event.Key.Code == sf::Key::Z)
+					zoom += 0.01;
+				//Reset des Stereoview
+				if (Event.Key.Code == sf::Key::U)
+					zoom -= 0.01;
 				break;
 
 //				// Adjust OpenGL viewport on resize event
@@ -791,6 +808,7 @@ int main() {
 		glEndList();
 
 		glNewList((GLint) SZENE, GL_COMPILE);
+			glScaled(zoom,zoom,zoom); // Szene zoomen
 			glCallList((GLint) HAUS);
 			glCallList((GLint) BAEUME);
 			glCallList((GLint) RASEN);
@@ -800,6 +818,7 @@ int main() {
 			if (i == 0) {
 					glLoadIdentity();
 					glTranslatef(0.f, 0.f, -200.f);
+					glRotated(140, 0, 1, 0); // Szene im linken Viewport um 45° y Achse drehen.
 					glRotatef(rotx, 0.f, 1.f, 0.f);
 					glRotatef(roty, 1.f, 0.f, 0.f);
 					glViewport(view0.x, view0.y, view0.w, view0.h); // linker Viewport
@@ -807,6 +826,8 @@ int main() {
 			else if (i == 1) {
 					glLoadIdentity();
 					glTranslatef(0.f, 0.f, -200.f);
+					glRotated(140, 0, 1, 0); // Szene im rechten Viewport um 45° y Achse drehen.
+					glRotated(stereo, 0, 1, 0); // Szene im rechten Viewport um 45° y Achse drehen.
 					glRotatef(rotx, 0.f, 1.f, 0.f);
 					glRotatef(roty, 1.f, 0.f, 0.f);
 					glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
