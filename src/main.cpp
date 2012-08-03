@@ -286,7 +286,7 @@ int main() {
 	float roty = 0;
 	float stereoy = 3; // Offset für den Stereoview des rechten Viewports
 	float stereox = 0;
-	float zoom = 1.25;
+	float zoom = 1.35;
 
 	GLfloat ogiebel = v8[2] - v0[2];
 
