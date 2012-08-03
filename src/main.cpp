@@ -270,7 +270,7 @@ int main() {
 
 	// Set color and depth clear value
 	glClearDepth(1.f);
-	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClearColor(1.f, 1.f, 1.f, 0.f);
 
 	// Enable Z-buffer read and write
 	glEnable(GL_DEPTH_TEST);
@@ -284,7 +284,8 @@ int main() {
 	// Rotation
 	float rotx = 0;
 	float roty = 0;
-	float stereo = 3; // Offset für den Stereoview des rechten Viewports
+	float stereoy = 3; // Offset für den Stereoview des rechten Viewports
+	float stereox = 0;
 	float zoom = 1.25;
 
 	GLfloat ogiebel = v8[2] - v0[2];
@@ -322,15 +323,23 @@ int main() {
 				//Rotation Down
 				if (Event.Key.Code == sf::Key::Down)
 					roty += 2;
-				//Rotation Up
+				//Rotation Left
 				if (Event.Key.Code == sf::Key::A)
-					stereo += 1;
-				//Rotation Down
+					stereoy -= 1;
+				//Rotation Right
 				if (Event.Key.Code == sf::Key::D)
-					stereo -= 1;
+					stereoy += 1;
+                //Rotation Up
+				if (Event.Key.Code == sf::Key::W)
+					stereox -= 1;
+				//Rotation Down
+				if (Event.Key.Code == sf::Key::S)
+					stereox += 1;
 				//Reset des Stereoview
-				if (Event.Key.Code == sf::Key::R)
-					stereo = 3;
+				if (Event.Key.Code == sf::Key::R) {
+					stereox = 0;
+					stereoy = 3;
+				}
 				//Rotation Down
 				if (Event.Key.Code == sf::Key::Z)
 					zoom += 0.01;
@@ -827,7 +836,8 @@ int main() {
 					glLoadIdentity();
 					glTranslatef(0.f, 0.f, -200.f);
 					glRotated(140, 0, 1, 0); // Szene im rechten Viewport um 45° y Achse drehen.
-					glRotated(stereo, 0, 1, 0); // Szene im rechten Viewport um 45° y Achse drehen.
+					glRotated(stereoy, 0, 1, 0); // Szene im rechten Viewport um 45° y Achse drehen.
+					glRotated(stereox, 1, 0, 0); // Szene im rechten Viewport um 45° x Achse drehen.
 					glRotatef(rotx, 0.f, 1.f, 0.f);
 					glRotatef(roty, 1.f, 0.f, 0.f);
 					glViewport(view1.x, view1.y, view1.w, view1.h); // rechter Viewport
